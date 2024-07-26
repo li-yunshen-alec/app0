@@ -806,6 +806,102 @@ During the next week, I will partake in at least 20 minutes of vigorous exercise
 2. I will...
 3. I will...`
       },
+      {
+        title: 'Temptation bundling to increase motivation',
+        content:
+`It's obvious that if a behaviour is something that we enjoy, chances are, we're more likely to repeat the behaviour.
+
+So what if we made our desired behaviours more enjoyable?`
+      },
+      {
+        title: 'Temptation bundling to increase motivation',
+        content:
+`We can do this by bundling a behaviour we want to repeat with a behaviour we enjoy. 
+
+For example, we could make it a habit to drop and do 20 before each Netflix episode.`
+      },
+      {
+        title: 'Temptation bundling to increase motivation',
+        content:
+`By the same principle, we can counteract negative habits by making them unenjoyable.
+
+For example, if we constantly remind ourselves of the negative effects of eating junk food, we're less likely to do it in the future.`
+      },
+      {
+        title: 'Developing inherent motivation',
+        content:
+`The easiest behaviours to execute are the ones we inherently enjoy. For example, it's easy for a runner to run because they inherently enjoy it.
+
+But part of the reason the runner inherently enjoys running is because it's ingrained in their self-image. And we know the self-image can be developed using the action/reward cycle.`
+      },
+      {
+        title: 'Developing inherent motivation',
+        content:
+`This means that we can learn to inherently enjoy any behaviour.
+
+As we repeat the behaviour, we can reframe the behaviour to highlight their benefits rather than their drawbacks to develop our self-image in the right direction.`
+      },
+      {
+        title: 'Developing inherent motivation',
+        content:
+`For example, Many people associate exercise with being a challenging task
+that drains energy and wears you down. You can just as easily view it as a
+way to develop skills and build you up. Instead of telling yourself "I need to go run in the morning," say "It's time to build endurance and get fast."`
+      },
+      {
+        title: 'Joining the right community',
+        content:
+`We tend to find behaviours of people in the same community to be most attractive. For example, it's a given that if we grow up in a family of chess players, we'd likely come to appreciate the game.
+
+You can take advantage of this by joining a community of people who exibit behaviours that you want to emulate.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`It's crucial to take small steps in order to achieve big results. Being patient and enjoying the process will lead to faster results.
+
+A barrier to achieving your goals can be the other goals you have. Stick to prioritizing the few goals that would improve your life most.
+
+We can perform actions we need to do with actions we want to do to make us more likely to do what we need.
+
+We can counteract negative habits by making them unenjoyable.
+
+We can devlop inherent motivation by reframing a behaviour to highlight its benefits rather than its drawbacks.
+
+Joining a community of people who exibit behaviours that you want to emulate is one of the best ways to improve your life.`
+      }
+    ]
+  },
+  {
+    id: 6,
+    title: '',
+    content: [
+      {
+        title: 'An interesting analogy',
+        content:
+`There's a famous experiment done on photography students.
+
+They were divided into a group that needed to produce as many photos as possible, and a group that needed to produce the best photo possible.`
+      },
+      {
+        title: 'An interesting analogy',
+        content:
+`What's surprising is, all the best photos were produced by the group was focused on quantity over quality.
+
+This is because, in the process of creating hundreds of photos, the students honed their skills.
+
+Meanwhile, the quality group sat around speculating about perfection. In the end, they had little to show for their efforts other than unverified theories and one mediocre photo.`
+      },
+      {
+        title: 'An interesting analogy',
+        content:
+`It's easy to get bogged down trying to figure out the optimal plan for losing weight. But what's most important is actually taking action.
+
+If you want to master a habit, the key is to start with repetition, not
+perfection. You don't need to map out every feature of a new habit. You just need to get your reps in.
+
+This finding is supported by science. Studies show that whether or not a behaviour becomes habit depends on the amount of repetitions it takes to form a habit, not time.`
+      },
     ]
   },
 ]
