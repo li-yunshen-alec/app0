@@ -1,6 +1,79 @@
 import { images } from "../constants";
 
 export const lessonData = [
+  { 
+    id: 0,
+    title: 'Introduction',
+    content: [
+      {
+        isCover: true,
+        title: `What's stopping you from losing weight?`,
+        content: `Hint: Mindset`,
+        image: images.catQuestion
+      },
+      { 
+        title: '',
+        content: 
+`Your mindset is the way you think of yourself. 
+
+Thoughts like, "I'm a healthy eater" or the opposite - "I'm a lazy person" make up the mindset.`,
+        image: 'https://media1.tenor.com/m/JhrBK6zYao0AAAAC/cat-orange.gif'
+      },
+      { 
+        title: 'The answer is mindset',
+        content: 
+`Differences in mindset seperate those who succeed at losing weight and those who don't.
+
+An overweight individual may be capable of eating healthy over a short period of time, but without an effective mindset, the individual would revert right back to their old eating habits.`,
+        image: 'https://media1.tenor.com/m/lP0bw19omAIAAAAd/cat-fat.gif'
+      },
+      { 
+        title: 'Negative mindsets lead to poor results', 
+        content: 
+`When some hit a snag, their primary reaction is to give up because they don't believe they can change.
+
+This is caused by thoughts like, "I'm too lazy" or "I can't do this."`,
+        image: 'https://media1.tenor.com/m/PGnGqfkIuLYAAAAd/cat-head.gif'
+      },
+      { 
+        title: 'Good mindsets lead to compounding results', 
+        content: 
+`Here’s the exciting upside: If you can learn to manage your mindset, you'll never fail to make progress. Each small step you take will bring you closer to success.`,
+        image: 'https://media1.tenor.com/m/h40VajEnzsYAAAAd/swag-cat.gif'
+      },
+      { 
+        title: 'Good mindsets lead to compounding results', 
+        content: 
+`The skills you'll be taught over the next 30 days will help you get back on track whenever you hit a snag.
+
+We'll make it easier for you to build towards your goals using small steps.`,
+        image: 'https://media1.tenor.com/m/EkEMWCj7JdQAAAAC/study-pretend.gif'
+      },
+      { 
+        title: 'Course overview', 
+        content: 
+`Your education is organized around 7 modules.
+
+1. Self-compassion: the cornerstone of a successful long-term journey
+2. Countering unhelpful thinking styles
+3. How to set reasonable, specific goals
+4. How to leverage your strengths instead of trying to fix your weaknesses
+5. Developing a positive body image
+6. Improving mental health
+
+Each module is grounded in science and extensive research.
+`
+      },
+      { 
+        title: 'Disclaimer', 
+        content: 
+`Your journey will not be perfect. We can't promise that this is "the right way" like other dubiously credible sources of information on weight loss.
+
+But we can absolutely promise you meaningful progress if you follow the techniques in this guide.`,
+        image: 'https://media1.tenor.com/m/OciTf1yC7PUAAAAd/cat-funny.gif'
+      },
+    ] 
+  },
   {
     id: 1,
     title: 'Setting small goals for big results',
@@ -293,6 +366,74 @@ Consciously update your self-image. Begin to think of yourself as someone who is
 `You will inevitably fail to achieve your goals at times. Everyone does.
 
 What's important is that you don't allow the failure to undermine your successes. If you begin to update your self-image to be more negative based on this negative experience, you actually make it more difficult to repeat the desired behaviour in the future.`
+      },
+      {
+        title: 'Counteracting negative thoughts as a result of failure',
+        content:
+`How can we ensure that we don't think update our self-image in the wrong direction when experiencing failure?
+
+When we fail and begin to think negative thoughts, we must consciously remind ourselves that failures do not undermine our progress.`
+      },
+      {
+        title: 'Counteracting negative thoughts as a result of failure',
+        content:
+`Progress in the self-fulfilling loop of success is like training a muscle. With each repetition of the loop, the next iteration of the loop becomes slightly easier to perform.
+
+Much like muscle-building, progress is not lost when we fail to perform an iteration of the loop.`
+      },
+      {
+        title: 'Counteracting negative thoughts as a result of failure',
+        content:
+`We must consciously remind ourselves that we are still "someone who is improving at x behaviour because." We are still "someone who can do x behaviour when we put our minds to it."`
+      },
+      {
+        title: 'Failure as a way to improve',
+        content:
+`If done correctly, we can go further and take advantage of failure in the loop.
+
+Our specific, achievable, behaviour-based goals allow us to reflect on what exactly went wrong. We can then determine what we'll do differently next time to make the next iteration of the loop easier.`
+      },
+      {
+        title: 'Failure as a way to improve',
+        content:
+`This approach has the added advantage of being a positive influence on our self-image. By taking advantage of the experince of reflecting on our failures and learning from them, we can update our self-image to be "someone who is improving at x behaviour because we are working hard and reflecting on our mistakes."`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`We will go more in-depth into taking advantage of failures tomorrow.
+
+Today, we've learned that the self-image is a picture that we create of ourselves based on our experiences.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`We cannot perform actions that do not align with our self-image.
+
+But studies have shown that the self-image can be changed.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`The primary way of doing so is the self-fulfilling feedback loop, which is the method in which most people naturally improve at things.
+
+When performing a behaviour, we update our self-image with the experience of doing the behaviour, which makes it easier to perform the behaviour in the future.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`It is necessary to ensure that failures do not negatively affect our self-image.
+
+We can do this by reminding ourselves that our progress isn't lost when we fail.
+
+Instead, if we reflect on our mistakes and use them to plan to do better next time, we can update our self-image to actually improve to "someone who is getting better at doing x behaviour because we are working hard and reflecting on our mistakes."`
+      },
+      {
+        title: 'The significance of this chapter',
+        content:
+`This chapter is possibly the most significant piece of knowledge that you can attain throughout the next 30 days. It links the importance of setting specific, achievable, behaviour-based goals with the concept of self-image to form the concept of the self-fulfilling feedback loop, which we can use to our advantage to achieve our goals.
+
+If you were only to get one thing out of this course, it should be this piece of knowledge.`
       },
     ]
   },
