@@ -153,6 +153,147 @@ It's even better to be more specific. For example, when you enter the kitchen, y
 
 This could mean making the behaviour enjoyable (e.g. listening to music while doing the behaviour), or getting a rewarding result as an outcome of the behaviour (e.g. a sense of accomplishment)`
       },
+      {
+        title: 'Breaking bad habits',
+        content:
+`Because cues lead to behaviours, it's necessary to break the cue-behaviour link between your undesired behaviour and its cue.
+
+For example, if your cue to eat a bowl of ice cream is coming home from a hot day at school, you can disrupt the link by eating some fruit instead.
+
+This is powerful because it leverages an existing link to propogate a positive behaviour.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`Studies have shown that it it best to set specific, achievable, behaviour-based goals.
+
+This is based on the principle of positive reinforcement, which states that behaviours that are rewarded are most likely to be repeated.
+
+Behaviours can be transformed into habits by setting a specific cue and ensuring the behaviour is rewarding.`
+      },
+    ]
+  },
+  {
+    id: 2,
+    title: 'Introduction to self-image',
+    content: [
+      {
+        title: 'What is the self-image?',
+        content:
+`Studies have shown that there's a key to changing our behaviours permanently - that's the self-image.
+
+The self-image is simply our own conception of the "sort of person I am."`
+      },
+      {
+        title: 'What is the self-image',
+        content:
+`Remember the example of the fat person that's trying but failing to lose weight?
+
+It's easy to imagine what kind of beliefs he has about himself as a person. He likely views himself as somewhat lazy or impulsive, because such views have likely been ingrained into him by the peole around him since childhood.`
+      },
+      {
+        title: 'What is the self-image',
+        content:
+`For most people, the self-image is formed from our past experiences, our successes and failures, our humiliations, our triumphs, and the way other people have reacted to us, especially in early childhood.
+
+From all these we mentally construct a picture of ourselves that we unconditionally believe to be true.`
+      },
+      {
+        title: 'What is the self-image',
+        content:
+`The self-image can be your key to success because of two important discoveries:
+
+1. All your actions, feelings, behaviors—even your abilities—are always consistent with this self-image.
+
+2. The self-image can be changed.`
+      },
+      {
+        title: '1. All your behaviours are consistent with your self-image',
+        content:
+`For example, a student who seems themselves as a failure at mathematics will constantly second-guess themselves on examinations, only to recieve poor grades. The poor grades serve as further evidence to reinforce their self-image of being poor at mathematics.`
+      },
+      {
+        title: '2. The self-image can be changed',
+        content:
+`Numerous case studies have shown that it is possible for anyone to change their self-image, and their behaviours and abilities as a result.`
+      },
+      {
+        title: '2. The self-image can be changed',
+        content:
+`Prescott Lecky was a schoolteacher who ran one of the first experiments on the self-image. He believed that if a student had trouble learning a subject, it was because the student being good at the subject would be inconsistent with their self-image.`
+      },
+      {
+        title: '2. The self-image can be changed',
+        content:
+`He worked with select students to develop their self-image, and it worked. Students who were failing subjects soon became high-performers.`
+      },
+      {
+        title: 'How can we change the self-image?',
+        content:
+`Recall the habit-building techniques you learned yesterday.
+
+As we repeat a behaviour over-and-over again, it gets easier-and-easier to do.`
+      },
+      {
+        title: 'How can we change the self-image?',
+        content:
+`Part of the reason why this happens is because with each repeat of an action, the self-image is updated to be closer aligned with the ideal self.
+
+Recall that the self-image is formed based on our experiences. So when we experience the impact of a behaviour, our self-image is updated in turn.`
+      },
+      {
+        title: 'The self-fulfilling loop of success',
+        content:
+`Let's see an example of this.
+
+Someone wants to improve their sleep hygiene by going to bed at the same time every day. They start by setting a reasonable goal to go to bed at 11PM on on Sundays and Mondays.`
+      },
+      {
+        title: 'The self-fulfilling loop of success',
+        content:
+`When they succeed at going to bed on time on Sunday, their self-image is updated based on this experience. They are no longer "someone who never goes to bed on time," they are "someone who is becoming better at going to bed on time."`
+      },
+      {
+        title: 'The self-fulfilling loop of success',
+        content:
+`This new self-image is further reinforced whenever the person succeeds at going to bed on time. As they keep succeeding and leveling up their goal to going to bed 3 days week, or 4, 5, 6, 7, their self-image updates from "someone who can go to bed on time when they put their mind to it," to "someone who is pretty decent at going to bed on time," to "someone who almost always goes to bed on time."`
+      },
+      {
+        title: 'The self-fulfilling loop of success',
+        content:
+`These improvements in self-image fuel the ease of committing to the behaviour, and the experience of succeeding at performing the behaviour further improve the self-image, resulting in a positive loop of success.`
+      },
+      {
+        title: 'How to utilize the self-fulfilling loop of success?',
+        content:
+`The self-fulfilling loop of success is the primary way in which anyone has ever improved at anything. Most people are not conscious of it - it just happens naturally as students get better at studying, as athletes improve at their sport.`
+      },
+      {
+        title: 'How to utilize the self-fulfilling loop of success?',
+        content:
+`However, because we're conscious of it, there's a very simple framework we can use to ensure that we take maximum advantage of it.`
+      },
+      {
+        title: '1. Start by setting the right goals',
+        content:
+`1. Start by setting short-term, specific, achievable, behaviour-based goals.
+
+Recall that such goals allow you the constant opportunity to celebrate your successes.`
+      },
+      {
+        title: '2. Celebrate your successes',
+        content:
+`2. Every time you take a step closer to achieving these goals, celebrate your success.
+
+Consciously update your self-image. Begin to think of yourself as someone who is getting better at achieving your desired behaviour. Understand that this improvement in self-image will make it easier to repeat the behaviour in the future.`
+      },
+      {
+        title: '3. Do not dwell on your failures',
+        content:
+`You will inevitably fail to achieve your goals at times. Everyone does.
+
+What's important is that you don't allow the failure to undermine your successes. If you begin to update your self-image to be more negative based on this negative experience, you actually make it more difficult to repeat the desired behaviour in the future.`
+      },
     ]
   },
 ]
