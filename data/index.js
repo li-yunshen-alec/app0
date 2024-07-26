@@ -116,6 +116,43 @@ This is because it is changes in behaviours that drive changes in outcomes.
 
 So when we focus on changing our behaviours by setting achievable, behaviour-based goals, we make the fastest progress towards achieving desired outcomes.`
       },
+      {
+        title: 'Transform your behaviours into habits',
+        content:
+`Habits are powerful because they're automatic. 
+
+A habit is formed when a specfic cue leads to a behaviour which is quickly followed by a positive impact.
+
+If this series of events happens enough times, a habit is formed.`
+      },
+      {
+        title: 'Transform your behaviours into habits',
+        content:
+`This is good for us because it means that as we stay consistent on our short-term, achievable goals, the behaviours associated with these goals will eventually become habitual.
+
+Unfortunately, scientific evidence indicates that there is no set number of times a behaviour has to be repeated to become habit. But as you stay consistent on your short-term, achievable goals, it will gradually become easier to perform these behaviours until they become habitual.`
+      },
+      {
+        title: 'Principles of habit-formation',
+        content:
+`1. Ensure that your achievable, behaviour-based goals are specific enough to often be done the the same context (i.e. same time, same place)`
+      },
+      {
+        title: 'Principles of habit-formation',
+        content:
+`2. Identify a cue of the behaviour. What indicator tells you that it's time to perform a behaviour?
+
+This could be seeing that it's a certain time of day or being in a certain setting. 
+
+It's even better to be more specific. For example, when you enter the kitchen, you drink a glass of water.`
+      },
+      {
+        title: 'Principles of habit-formation',
+        content:
+`3. Make sure you're rewarded for the behaviour
+
+This could mean making the behaviour enjoyable (e.g. listening to music while doing the behaviour), or getting a rewarding result as an outcome of the behaviour (e.g. a sense of accomplishment)`
+      },
     ]
   },
 ]
