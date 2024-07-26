@@ -573,5 +573,113 @@ For example, now that you've addressed your negative thoughts, you can take step
       },
     ] 
   },
+  { 
+    id: 4,
+    title: 'Introduction to self-compassion',
+    content: [
+      { 
+        title: 'The single most important tool for success on the weight-loss journey',
+        content: 
+`You're at the starting line of an amazing transformation. If your thinking is fueled by beliefs like "I'm disgusting" or "I have no willpower," do you think you'll have feelings of motivation, empowerment, or hope to help you along your journey?
+
+Self-compassion is valuing yourself. It's an outlook that outlook that frames things not as failures but as chances to learn and grow.`
+      },
+      { 
+        title: 'The fallacy of negative thinking',
+        content: 
+`Many people think that being tough on themselves is the key to motivation, that the whole point of the journey is to fix flaws, and that when they lose weight, then they’ll deserve kindness.
+
+Research tells us the opposite. “Clinically, patients who do well over the long-term—four, five, ten years—are those who are basically able to put into practice self-compassion skills,” - Gary Bennett, Ph.D. and expert in digital obesity treatments.`
+      },
+      { 
+        title: 'Principle 1 - Recognize your limiting beliefs',
+        content: 
+`We learned in chapter 2 that our behaviours and abilities are limited by our self-image; we cannot perform actions that do not align with it.
+
+So when someone with a belief that they are extremely incompetent tries to lose weight, even if they try their best to set short-term, specific, achievable behaviour-based goals, they may fail at these because it's obvious that a lazy person wouldn't be able to achieve even the simplest of goals.`
+      },
+      { 
+        title: 'Principle 1 - Recognize your limiting beliefs',
+        content: 
+`You must ask yourself, what thoughts do I have that limit me from reaching my goals? Consider what experiences these thoughts come from.
+
+For example, a student may be performing poorly in mathematics because they believe themselves to be poor at math. This belief may have been developed in early childhood when they performed poorly in arithmatic, and may be imposed onto them by teachers, parents, or peers.`
+      },
+      { 
+        title: 'Principle 2 - Recognize that you do not have to be limited',
+        content: 
+`As we've learned, we never question our limiting beliefs. For example, a student being poor at mathematics may have the belief so deeply ingrained in their identity that they unconditionally believe it to be true.
+
+But we know that through efforts to achieve small goals, we can update our self-image.`
+      },
+      { 
+        title: 'Principle 3 - Work towards changing the self-image',
+        content: 
+`By achieving success at our short-term, specific, attainable, behviour-based goals, we can improve our self-image. For example, these successes can develop our self-image into things like "I am not great at x but I am slowly improving" or "I am able to do x when I put my mind to it."
+
+But what if our initial starting point is so poor that we're unable to achieve success at even the simplest of goals?`
+      },
+      { 
+        title: 'Principle 3 - Work towards changing the self-image',
+        content: 
+`The solution to this problem lies in the fact that it's not possible to start too small. We emphasize setting short-term, attainable goals. This means that if you're starting at level 0, your goal should be to get to level 1.
+
+For example, if you drink 5 cans of soda every day, you can start by drinking only 4 cans of soda on Mondays for a couple weeks. The key is make sustainable progress by meeting yourself where you're truly at.`
+      },
+      { 
+        title: 'Principle 4 - Set better goals',
+        content: 
+`The weight-loss journey is a journey of eliminating our weaknesses. 
+
+And when we're focused on our weaknesses, it's hard to realize that it's more effective to actually develop our strengths.`
+      },
+      { 
+        title: 'Principle 4 - Set better goals',
+        content: 
+`For example, we could set a goal to drink less soda; or we could set a goal to drink more water.
+
+Studies have shown that the goal to drink more water is more effective at promoting a healthy lifestyle in the long run. This is because every time we drink more water, our self-image is further developed into "someone who lives a healthy lifestyle," whereas drinking less soda will only get us to the less motivating "someone who doesn't life a poor lifestyle."`
+      },
+      { 
+        title: 'Principle 5 - Recognize your inherent strengths',
+        content: 
+`All people have strengths and achievements that they can use to form a more positive picture of themselves.
+
+Recall the example of the overweight person thinking thoughts like "I have no willpower." Imagine how easy their weight-loss journey would be if they considered themselves dedicated and hard-working!`
+      },
+      { 
+        title: 'Principle 5 - Recognize your inherent strengths',
+        content: 
+`Of course, we can develop our self-image into that of a dedicated and hard-working person by taking advantage of the behaviour/self-image loop.
+
+But we can speed up the process by reshaping our self-image based on different experiences.`
+      },
+      { 
+        title: 'Principle 5 - Recognize your inherent strengths',
+        content: 
+`For example, you may have a negative idea of your work ethic based on your many experiences of procrastination.
+
+But what about all the times you've grinded out remarkable results in-game? It's not that you always have a poor work ethic; it's only at certain things.`
+      },
+      { 
+        title: 'Principle 5 - Recognize your inherent strengths',
+        content: 
+`This new version of your self-image opens up new possibilities. You're not just someone with a poor work ethic, because you're capable of applying your work ethic to some things. This means you're capable of applying it to your weight loss journey.`
+      },
+      { 
+        title: 'Chapter summary',
+        content: 
+`Negative beliefs like "I have no willpower" are a barrier to success. On the other hand, positive beliefs accelerate our success.
+
+We must examine our own limiting beliefs and understand that in many cases, they aren't true, and if they are, we can work towards remedying them.
+
+One method of doing so is to work towards changing our self-image by leveraging the achievement/self-image feedback cycle.
+
+We can create better self-images and accelerate our progress by setting positive goals rather than negative goals.
+
+We can make the journey easier by rethinking our self-images to be more positive.`
+      },
+    ] 
+  },
 ]
 
