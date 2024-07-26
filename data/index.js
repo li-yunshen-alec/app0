@@ -571,6 +571,47 @@ Or, "We all have times like that—it happens. Don't beat yourself up. You have 
 
 For example, now that you've addressed your negative thoughts, you can take steps towards your goals.`
       },
+      { 
+        title: 'Don\'t Worry—Make a Plan',
+        content: 
+`If you reach a setback and have thoughts like "I'll deal with it tomorrow" or "It'll all work out in the long run" without having a plan for change, use this technique to outline specific steps to move forward with your goals.`
+      },
+      { 
+        title: 'Don\'t Worry—Make a Plan - Step 1',
+        content: 
+`Tune in to the "don't worry, be happy" thoughts when they arise. 
+
+For example, when something gets in the way of you going to bed early, you may think "Oops - guess I'll just start tomorrow."`
+      },
+      { 
+        title: 'Don\'t Worry—Make a Plan - Step 2',
+        content: 
+`Again, this kind of thinking isn't productive because you need to consider the specific steps you'll take.
+
+For example, you may plan to set a bedtime alarm to begin your bedtime routine in advance.`
+      },
+      {
+        title: 'Don\'t Worry—Make a Plan - Step 3',
+        content: 
+`Create a plan. Ask yourself, what steps you can realistically take, when you'll take them, and how.
+
+For example, "Monday through Thursday at 9:30 p.m., I will shut off my computer, silence my phone, and open a book so I can wind down before it’s time to go to sleep."`
+      },
+      {
+        title: 'Chapter summary',
+        content: 
+`Our thoughts determine our feelings, which determine our behaviours.
+
+Unhelpful thoughts often come as a result of setbacks. 
+
+They can come in the form of all-or-nothing thoughts, negative framing of reasonable situations, thinking something will always happen because it's happened before, or positive thinking without plans.
+
+It's necessary to remedy these thoughts ensure that one setback doesn't lead to another.
+
+One technique for doing so is the Reality Check - consider the unhelpful thoughts from a different perspective, such as that of a friend.
+
+Another technique is formulating specific plans in reponse to "don't worry, be happy" thoughts.`
+      },
     ] 
   },
   { 
@@ -680,6 +721,92 @@ We can create better self-images and accelerate our progress by setting positive
 We can make the journey easier by rethinking our self-images to be more positive.`
       },
     ] 
+  },
+  {
+    id: 5,
+    title: 'The power of changing your environment',
+    content: [
+      {
+        title: 'Reminder of the power of taking small steps to achieve big results',
+        content:
+`It's easy to be discouraged by the seemingly slow progress that comes with setting short-term, attainable, behaviour-based goals.
+
+But remember that this is how improvement in any area is made. Michael Jordan didn't become the GOAT overnight!`
+      },
+      {
+        title: 'Reminder of the power of taking small steps to achieve big results',
+        content:
+`This is a reminder to learn to enjoy the process.
+
+If you truly believe that you're making progress, you'll make quicker progress. This is because your self-image would be closer aligned to that of someone who's achieving their goals if that's what you believed.
+
+Remember, your self-image is the basis of all your behaviours. So don't forget to value each small step!`
+      },
+      {
+        title: 'Ruthlessly Eliminate Your Goals',
+        content:
+`Psychologists have a concept they refer to as "goal competition."
+
+Goal competition says that one of the greatest barriers to achieving your goals is the other goals you have.`
+      },
+      {
+        title: 'Ruthlessly Eliminate Your Goals',
+        content:
+`It makes sense why this is. Whenever you chase a new goal, you have to pull focus and energy from your other pursuits.
+
+Thus, our goals need to be trimmed down. Put all of your focus into just a few (i.e. 3-6) goals at a time.`
+      },
+      {
+        title: 'How to Align Your Environment With Your Goals',
+        content:
+`Our behaviours are often determined by the environment we find ourselves in. For example, if a cup of water is constanly next to us, we may opt for the water instead of any other drink because it's the easiest choice.`
+      },
+      {
+        title: 'How to Align Your Environment With Your Goals',
+        content:
+`Aligning your environment with your goals is essential for consistency. In fact, it's so effective that I encourage you to write down how you'll change your environment for each of your goals.
+
+Studies show that this works - the act of thinking through and writing down the environmental changes you want to make makes you much more likely to make them - and ultimately achieve your goals.`
+      },
+      {
+        title: 'How to Align Your Environment With Your Goals',
+        content:
+`Aligning your environment with your goals can also help you to combat bad habits.
+
+For example, setting your phone in another room when you're working can significantly reduce the amount you get distracted.`
+      },
+      {
+        title: 'Example of a list of goals',
+        content:
+`During the next week, I will partake in at least 20 minutes of vigorous exercise on [DAY] at [TIME OF DAY] at/in [PLACE]. I will do this by...
+
+I will drink 1 cup of water every day at [TIME OF DAY] at/in [PLACE], [TIME OF DAY] at/in [PLACE], [TIME OF DAY] at/in [PLACE], and [TIME OF DAY] at/in [PLACE]. I will do this by...
+
+I will replace my weekly snack at [TIME OF DAY] at/in [PLACE] with _. I will do this by...`
+      },
+      {
+        title: 'Action stacking',
+        content:
+`Studies have shown that when we create a step-by-step plan for performing a behaviour, we're more likely to follow through with it. This is because often, the cue for a behaviour ends up being the act of performing a different behaviour.
+
+For example:
+
+Meditation: After I brew my morning coffee, I will meditate for one minute.
+Pushups: Before I take my morning shower, I will do 10 pushups.
+Flossing: After I set my toothbrush down, I will floss my teeth.`
+      },
+      {
+        title: 'Example of a list of goals',
+        content:
+`We can leverage this effect by considering all that goes into performing an action. For example, by writing out a sequence of steps, we're most likely to follow through with a goal.
+
+During the next week, I will partake in at least 20 minutes of vigorous exercise on [DAY] at [TIME OF DAY] at/in [PLACE]. I will do this by...
+
+1. I will...
+2. I will...
+3. I will...`
+      },
+    ]
   },
 ]
 
