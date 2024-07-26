@@ -437,5 +437,141 @@ If you were only to get one thing out of this course, it should be this piece of
       },
     ]
   },
+  { 
+    id: 3,
+    title: 'Setbacks are opportunities to refocus',
+    content: [
+      { 
+        title: 'What you think determines what you do',
+        content: 
+`We know from cognitive behavioral psychology that what you think drives how you feel and what you do. 
+
+Therefore, to do differently, you need to think differently.`
+      },
+      { 
+        title: 'Where do feelings come in?',
+        content: 
+`In truth it’s a three-step process: If you change how you think, then you change how you feel, and then you change what you do.
+
+For example, a setback can start with negative thoughts (e.g., "I can’t believe I ate those cookies"), leading to feelings of despair and futility, which prompt further undesired actions (like hastily eating more unwanted cookies).`
+      },
+      { 
+        title: 'Thoughts are not facts,',
+        content: 
+`Especially when fueled by an unhelpful thinking style. They are simply things we say in our heads that we believe to be true.
+
+Consider what your own perspective on weight loss is. What do you tend to think, and in turn, feel, in response to setbacks? Consider whether your response is similar to one of the following.`
+      },
+      { 
+        title: 'All-or-none',
+        content: 
+`Imagine you've kept up with your eating goals all week. Then you eat something unplanned.
+
+"It's all over," you think. You feel defeated and hopeless and proceed to eat more. (Why not, right? The day’s totally wrecked.)`
+      },
+      { 
+        title: 'All-or-none',
+        content: 
+`All-or-none thinking is viewing things only in extremes.
+
+It's thinking only "I'm doing well," or "I'm doing terribly," or "I can't eat any sugar at all," or "I can't have any carbs at all."
+
+It's categorizing foods as either "good" or "bad." It's thinking that it's all over after a single setback.`
+      },
+      { 
+        title: 'Reframing all-or-none thinking',
+        content: 
+`Of course, the reality is that a single setback does not ruin everything. The focus should be on progress, not perfection.
+
+If one mistake is made, it's crucial that it doesn't lead to another - because it's just a mistake, not a catastrophe.`
+      },
+      { 
+        title: 'Negative Filter',
+        content: 
+`If someone hits their goals 6 out of 7 days in a week, would they focus on the negative (that they missed a day) or would they be proud of themselves for hitting the goal 6 out of 7 times a week?`
+      },
+      { 
+        title: 'Reframing the negative filter',
+        content: 
+`While it's true that the person missed a day, it's also true that they did numerous things throughout the week that they can be proud of.
+
+Getting back on track after a setback involves focusing on not just the negative. If you get mostly high grades, and one mediocre one, do you tell yourself you're doing a lousy job?
+
+The next time you’re feeling particularly upset about a mistake, take a breath and see the big picture. A setback is a setback. It tells you nothing about the journey as a whole.`
+      },
+      { 
+        title: 'Once Makes Always',
+        content: 
+`It's thinking that if something happens once, it's guranteed to happen again.
+
+For example, "I made a mistake this week. I'll never be successful."`
+      },
+      { 
+        title: 'Reframing Once Makes Always',
+        content: 
+`Shifting away from this type of thinking requires acknowledging that the next time doesn't have to be the same.
+
+For example, eating something unexpected doesn't have to always happen. You can think about how it happened, and create actionable steps to do things differently next time (more on this later).`
+      },
+      { 
+        title: 'Don’t Worry, Be Happy',
+        content: 
+`Many people get the wrong idea about self-compassion. It's not just positive thinking without planning.`
+      },
+      { 
+        title: 'Reframing Don’t Worry, Be Happy',
+        content: 
+`The response to a setback should never just be, "things will be better." True self-compassion means creating a plan and setting an action-ready goal for what to do next, and ultimately thinking that "things will be better next time because I will do these things differently."`
+      },
+      { 
+        title: 'Techniques to reframing',
+        content: 
+`Fortunately, there have been numerous studies on addressing unhelpful thinking styles.
+
+The effective techniques uncovered in these studies are going to be presented to you. For best results, focus on mastering the ones that feel most natural and doable to you.`
+      },
+      { 
+        title: 'Reality check',
+        content: 
+`When you hit a setback and feel discouraged, use this technique to reframe unhelpful thoughts into helpful ones.
+
+This is important for not repeating the same mistakes.`
+      },
+      { 
+        title: 'Reality check - Step 1',
+        content: 
+`When you hit a setback, start by considering what your thoughts are.
+
+Ask yourself, "What is the story I’m telling myself about this situation? What judgments have I made about this setback?"
+
+For example, if you you've just eating a pint of ice cream due to stress, you may think "I just ruined all my hard work. I'll never get back on track."`
+      },
+      { 
+        title: 'Reality check - Step 2',
+        content: 
+`Next, it's time for a reality check.
+
+Pretend you're a friend. Ask yourself, "Are there facts to back up my thought? If a friend shared this thought, what would I say to them? How would I help them get back on track?"
+
+For example, "Is it true that I ruined all my hard work? Is giving up the only thing I can do?"`
+      },
+      { 
+        title: 'Reality check - Step 3',
+        content: 
+`Now respond to your reality check with a new helpful thought based on your reality check.
+
+For example, "Yes, I ate that ice cream without planning to. However, that doesn't discount all the progress I've made. It's just one moment and I can get back on track with my goals."
+
+Or, "We all have times like that—it happens. Don't beat yourself up. You have what it takes to get back on track."`
+      },
+      { 
+        title: 'Reality check - Step 4',
+        content: 
+`Finally, commit to the action you want to take, instead of the one that an unhelpful thought might lead you to.
+
+For example, now that you've addressed your negative thoughts, you can take steps towards your goals.`
+      },
+    ] 
+  },
 ]
 
