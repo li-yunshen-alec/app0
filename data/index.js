@@ -991,6 +991,111 @@ The brains of these people are the same as everyone else's. They've simply turne
 
 For example, each time you refrain from eating out, tally it up. Once you've reached enough tallies, you can reward yourself with a nice purchase. Obviously, make sure your reward doesn't conflict with your desired behaviour.`
       },
+      {
+        title: 'Chapter summary',
+        content:
+`Quantity is sometimes better than quality. It's more important to take action than it is to obsess over taking the right actions.
+
+Habits can be completed in a few seconds but continue to impact your
+behavior for minutes or hours aferward.
+
+Many habits occur at decisive moments—choices that are like a fork in
+the road—and either send you in the direction of a productive day or
+an unproductive one.
+
+The Two-Minute Rule states, "When you start a new habit, it should
+take less than two minutes to do."
+
+The human brain evolved to prioritize immediate rewards over delayed
+rewards.
+
+To get a habit to stick you need to feel immediately successful—even if
+it's in a small way.`
+      },
+    ]
+  },
+  {
+    id: 7,
+    title: 'Advanced tactics',
+    content: [
+      {
+        title: 'The power of habit tracking',
+        content:
+`Imagine, each day you do good habits, you cross off a day on the calendar.
+
+Habit tracking tends to work: One study of more than sixteen hundred people found that those who kept a daily food log lost twice as much weight as those who did not.`
+      },
+      {
+        title: 'The power of habit tracking',
+        content:
+`It's effective because, 
+
+1. It keep you accountable,
+2. It serves as a reminder that each small step you take is progress in the right direction,
+3. It serves as a reward to a behaviour - The satisfaction of marking an X on the calendar can become the short-term reward that keeps you going.`
+      },
+      {
+        title: 'Habit tracking is not a complete solution',
+        content:
+`Habit tracking is not for everyone.
+
+One reason for that is, it forces you into two habits: the habit you're trying to build and the habit of tracking it.
+
+That's why Refit makes it a point to keep habit tracking as simple as possible - but it's still most effective if you track only the habits that matter most to you.`
+      },
+      {
+        title: 'Reminder to never miss twice in a row',
+        content:
+`If you're tracking your habits, you'll inevitably notice that you'll break a streak sometimes.
+
+It happens to everybody - but the key difference between those who succeed and those who don't is that the winners tend to rebound quickly. 
+
+If you're not feeling well, still do everything in your power to show up. A 5-minute gym workout is better than nothing - it may not improve your performance, but it reaffirms your identity.`
+      },
+      {
+        title: 'The power of an accountability partner',
+        content:
+`A known consequence of an action can make it really unattractive. For example, fines for smoking can greatly reduce smoking in certain places.
+
+We can have an accountability partner keep track of how we're doing and create an immediate cost to inaction if we break a streak. We care deeply about what others think of us, and we do not want others to have a lesser opinion of us`
+      },
+      {
+        title: 'The power of an accountability partner',
+        content:
+`A known consequence of an action can make it really unattractive. For example, fines for smoking can greatly reduce smoking in certain places.
+
+We can have an accountability partner keep track of how we're doing and create an immediate cost to inaction if we break a streak. We care deeply about what others think of us, and we do not want others to have a lesser opinion of us`
+      },
+      {
+        title: 'The power of an accountability partner',
+        content:
+`A known consequence of an action can make it really unattractive. For example, fines for smoking can greatly reduce smoking in certain places.
+
+We can have an accountability partner keep track of how we're doing and create an immediate cost to inaction if we break a streak. We care deeply about what others think of us, and we do not want others to have a lesser opinion of us`
+      },
+      {
+        title: 'The power of goals that are "just right"',
+        content:
+`Studies have shown that humans experience peak motivation when working on tasks that are right on the edge of their current abilities.
+
+If a goal is too easy, it feels boring, and if it's too hard, it feels impossible.`
+      },
+      {
+        title: 'The power of showing up even when you don\'t feel like it',
+        content:
+`One of the greatest distinctions between those who succeed and those who don't: even when life gets in the way, even when motivation is low, the successful will show up.
+
+If something is important to you, it's necessary that you consistently take action on it no matter what.
+
+One great strategy is to do things in order of priority. If your studies are most important to you, it's best to do it as soon as you can. No more "I'll do it after school" or "I'll do it after dinner" - the successful people do it right away.`
+      },
+      {
+        title: '',
+        content:
+`The primary advantage of doing the most important work first is making sure that nothing gets in the way of it - no expected events can delay the work if it's the first event of the day.
+
+It also ensures that you aren't exhausted by any previous events before the most important part of the day - for example, I find it easier to do work before school rather than after because I'm just more tired after school.`
+      },
     ]
   },
 ]
