@@ -1096,6 +1096,104 @@ One great strategy is to do things in order of priority. If your studies are mos
 
 It also ensures that you aren't exhausted by any previous events before the most important part of the day - for example, I find it easier to do work before school rather than after because I'm just more tired after school.`
       },
+      {
+        title: '',
+        content:
+`THERE IS AN ancient Greek parable known as the Sorites Paradox,* which talks about the effect one small action can have when repeated enough times. One formulation of the paradox goes as follows: Can one coin make a person rich? If you give a person a pile of ten coins, you wouldn't claim that he or she is rich. But what if you add another? And another? And another?At some point, you will have to admit that no one can be rich unless one coin can make him or her so.`
+      },
+      {
+        title: '',
+        content:
+`Just as coins can make one rich, small improvements to your lifestyle will eventually compound to allow you to reach your goals.`
+      },
+      {
+        title: 'Chapter summary',
+        content:
+`Tracking your habits can keep you accountable, and the satisfaction that comes with progress can help you to keep going.
+
+An accountability partner can increase your chances of sticking to your habits by providing a consequence to breaking your streak.
+
+Those who succeed never miss twice in a row; they stick with their habits even when they don't feel like it.`
+      },
+    ]
+  },
+  { 
+    id: 8,
+    title: 'Devloping a positive body-image',
+    content: [
+      {
+        title: 'The dangers of a negative body-image',
+        content:
+`It's necessary to separate your view of your body-image from your sense of self-worth in order to succeed.
+
+So many overweight people fall into the trap of having low self-worth from allowing their body image to define their worth.`
+      },
+      {
+        title: 'The body-image vs self-image',
+        content:
+`Whereas the self-image describes your view of yourself as a whole, your body-image describes your view of your body.
+
+It encompasses thoughts like, "My arms and legs are too thick" or "I hate the way my double-chin looks."`
+      },
+      {
+        title: 'The body-image vs self-image',
+        content:
+`It's no surprise that a negative body image can lead to a negative self-image, especially when fuelled by societal stigma.
+
+Most people assume that people become overweight by lacking discipline, having no willpower, or being gluttonous. In reality, genetics is responsible for 40-70 percent of the variation in body weight.`
+      },
+      {
+        title: 'The body-image vs self-image',
+        content:
+`When such beliefs are internalized into the self-image, they hinder your progress.
+
+To help reframe these beliefs, we can examine the body-image - the root of our problems.`
+      },
+      {
+        title: 'The body-image vs self-image',
+        content:
+`The four items below by Tom Cash, Ph.D. represent the top false beliefs held by people with a negative body image
+
+1. Physically attractive people have it all.
+2. The first thing that people will notice about me is what's wrong with
+my appearance.
+3. If I could look just as I wish, my life would be much happier.
+4. The only way I could ever like my looks would be to change them.`
+      },
+      {
+        title: 'The body-image vs self-image',
+        content:
+`In addition, these are some unhelpful thinking styles typical of a negative body-image:
+
+1. You view your appearance in terms of extremes - you're either the beauty or the beast.
+2. When you compare yourself to others, you focus on aspects of your body that you dislike.
+3. When you look into a mirror, all you see are the parts you don't like.
+4. You restrict yourself from doing certain things because of how you look (e.g. I can't ask the girl out until I lose weight)`
+      },
+      {
+        title: 'How can we learn to value our bodies?',
+        content:
+`Wanting to lose weight and valuing your body are seemingly contradictory ideas. How can we value our body and want to change it at the same time?
+
+The key is to reframe the weight-loss journey from being about destroying a part of yourself that you don't like, to taking care of your body. You're losing weight in orderr to be more athletic, or to improve your health.`
+      },
+      {
+        title: 'Benefits of a postive body image',
+        content:
+`Studies show that a postive body image is linked with more successful weight-loss outcomes.
+
+The following techniques will help you to develop a more postive body image. Keep in mind that it's unlikely you will just "flip a switch" and feel good about your body overnight. It takes time and practice to shift mindset.`
+      },
+      {
+        title: 'What You Do for Me',
+        content:
+`1. TAKE A MOMENT TO VISUALIZE A PART OF YOUR BODY THAT YOU WISH WAS DIFFERENT. If you typically think, My arms are so big, take a moment to picture your arms. It doesn't have to be your least favorite body part—choose one that you feel comfortable thinking about.`
+      },
+      {
+        title: 'What You Do for Me',
+        content:
+``
+      },
     ]
   },
 ]
