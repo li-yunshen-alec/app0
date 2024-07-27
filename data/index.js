@@ -902,6 +902,95 @@ perfection. You don't need to map out every feature of a new habit. You just nee
 
 This finding is supported by science. Studies show that whether or not a behaviour becomes habit depends on the amount of repetitions it takes to form a habit, not time.`
       },
+      {
+        title: 'The power of gateway habits',
+        content:
+`Actions can lead to actions that lead to other actions.
+
+For example, the act of opening your notes leads you to study.`
+      },
+      {
+        title: 'The power of gateway habits',
+        content:
+`This means that many habits can represent a fork in the road, where making a good choice leads to a series of other good choices, and making a bad choice leads to a series of bad choices.
+
+For example, if you take out your homework as soon as you get home from school, you might end up studying for the rest of the evening.
+
+But if you hop on Discord with your gamer friends instead, you might end up playing LoL for a couple hours.`
+      },
+      {
+        title: 'The power of gateway habits',
+        content:
+`These are very different outcomes that come as a result of a single choice (what to do upon coming home from school).
+
+Imagine if you made it a habit to take out your homework right after coming home from school. You'd be so much more likely to achieve the behaviour you ultimately desire (studying and getting good grades).`
+      },
+      {
+        title: 'The 2-minute rule',
+        content:
+`It's easy to make a habit of taking out your homework upon coming home from school - it's just 1 action that takes less than a minute.
+
+If you focus on the action of simply taking out your homework, you'll find it easy to do, and you might find that you'll naturally study for some time afterwards.`
+      },
+      {
+        title: 'The 2-minute rule',
+        content:
+`This leads us to the 2-minute rule, which states that when starting out, it's most effective to focus on developing a habit that's so easy, it takes less than 2-minutes to complete.
+
+For example, we can focus on the act of taking out our homework, or focus solely on the act of doing our homework for 2 minutes.`
+      },
+      {
+        title: 'The 2-minute rule',
+        content:
+`"But what if I just do my homework for 2 minutes and then play LoL?"
+
+That's fine. Remeber that with each repetition of your 2-minute habit, you update your self-image to be closer to that of a truly studious fellow. At some point, you'll think that you might as well study for longer after your 2 minutes are over.`
+      },
+      {
+        title: 'The dangers of instant gratification',
+        content:
+`Why is it that it's so easy to browse social media and so difficult to hit the gym, when ultimately, the gym rewards us with better outcomes (i.e. a killer physique vs. a bit of short-term satisfaction)?
+
+This is due to human's innate psychological preference for short-term rewards over long-term gain.`
+      },
+      {
+        title: 'The dangers of instant gratification',
+        content:
+`Over the past 200,000 years, the human brain has evolved to prioritize short-term rewards. You are always thinking about the present or very-near future - what to eat or where to sleep or how to avoid a predator. Our brains function in much the same way today.`
+      },
+      {
+        title: 'The dangers of instant gratification',
+        content:
+`But in today's society, it's almost always more beneficial to prioritize long-term gains.
+
+Studies have shown that people that are better at this have SAT scores lower levels of substance abuse, lower likelihood of obesity, better responses to stress, and superior social skills.
+
+And it makes sense why. The person who prioritize long-term gains is the person who studies. They eat healthy and get things done in advance.`
+      },
+      {
+        title: 'Turning instant-gratification to your advantage',
+        content:
+`If our brains are wired to prefer instant-gratifiaction, how can people avoid social media, eat healthy, and regularly exercise?
+
+The brains of these people are the same as everyone else's. They've simply turned instant gratifcation to their advantage.`
+      },
+      {
+        title: 'Turning instant-gratification to your advantage',
+        content:
+`When I hit a workout, I'm immediately rewarded by the satisfaction of completing it. I know that what I just did has taken me one step closer to achieving my goals, and I feel proud of myself - as if I've just leveled up. The feeling of satisfaction is the reward itself.`
+      },
+      {
+        title: 'Turning instant-gratification to your advantage',
+        content:
+`You can leverage the same effect by remembering, with each repetition of a desired behaviour, you update your self-image and you're one step closer to your goals.`
+      },
+      {
+        title: 'Turning instant-gratification to your advantage',
+        content:
+`If this kind of reward isn't enough for you, try rewarding yourself with something else.
+
+For example, each time you refrain from eating out, tally it up. Once you've reached enough tallies, you can reward yourself with a nice purchase. Obviously, make sure your reward doesn't conflict with your desired behaviour.`
+      },
     ]
   },
 ]
