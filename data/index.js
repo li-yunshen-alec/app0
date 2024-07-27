@@ -1196,5 +1196,110 @@ The following techniques will help you to develop a more postive body image. Kee
       },
     ]
   },
+  { 
+    id: 9,
+    title: 'Introduction to self-compassion',
+    content: [
+      { 
+        title: 'The single most important tool for success on the weight-loss journey',
+        content: 
+`You're at the starting line of an amazing transformation. If your thinking is fueled by beliefs like "I'm disgusting" or "I have no willpower," do you think you'll have feelings of motivation, empowerment, or hope to help you along your journey?
+
+Self-compassion is valuing yourself. It's an outlook that outlook that frames things not as failures but as chances to learn and grow.`
+      },
+      { 
+        title: 'The fallacy of negative thinking',
+        content: 
+`Many people think that being tough on themselves is the key to motivation, that the whole point of the journey is to fix flaws, and that when they lose weight, then they’ll deserve kindness.
+
+Research tells us the opposite. “Clinically, patients who do well over the long-term—four, five, ten years—are those who are basically able to put into practice self-compassion skills,” - Gary Bennett, Ph.D. and expert in digital obesity treatments.`
+      },
+      { 
+        title: 'Principle 1 - Be kind to yourself',
+        content: 
+`Be kind and understanding to yourself, rather than engaging in self-criticism, when you have setbacks or feel bad about yourself.
+
+When women trying to lose weight were given candy after they strayed from their diets, those who practiced a self-compassion exercise were less likely to take the candy despite the previous setback.`
+      },
+      { 
+        title: 'Principle 2 - Mindfulness',
+        content: 
+`Accept your experiences right now for what they are, without judgment`
+      },
+      { 
+        title: 'Principle 3 - Common humanity',
+        content: 
+`Recognize that imperfection is human, that stumbling or not achieving a goal the first time (or fifth time) is something that happens to every single person, not just you.`
+      },
+      { 
+        title: 'Myth 1',
+        content: 
+`Misconception: Self-compassion is about ignoring negative emotions. 
+
+Truth: It’s about acknowledging these feelings as a human experience, and responding with kindness and patience, leading to self-care and improved well-being.`
+      },
+      { 
+        title: 'Myth 2',
+        content: 
+`Belief: I am who I am. I come from a family of people who are hard on themselves.
+
+Reality: Actually, you can change. Some people naturally have more or less self-compassion, but it can be developed and improved through practice.`
+      },
+      { 
+        title: 'The four-step process to talking to yourself like a friend',
+        content: 
+`IMAGINE IT’S NOT YOU BUT A CLOSE FRIEND who has had a setback or is having a tough time at the moment. What would you say to her/him? How would you say it? Tone of voice is just as important as words.`
+      },{ 
+        title: 'Technique 1',
+        content: 
+`IMAGINE IT’S NOT YOU BUT A CLOSE FRIEND who has had a setback or is having a tough time at the moment. What would you say to her/him? How would you say it? Tone of voice is just as important as words.`
+      },
+      { 
+        title: 'Technique 2',
+        content: 
+`THINK ABOUT RIGHT NOW, as you are in this moment of setback or struggle. What are you saying to yourself? What tone of voice are you using? Does it feel cruel or kind? Speak the words aloud or say them in your mind or write them down—whatever works best for you.`
+      },
+      { 
+        title: 'Technique 3',
+        content: 
+`ASK YOURSELF IF THERE’S A DIFFERENCE BETWEEN YOUR ANSWERS TO 1 AND 2. If so, why? What might lead you to treat yourself differently from others in the same situation? What would change if you talked to yourself the way you would a friend, or the way a friend would talk to you?`
+      },
+      { 
+        title: 'Technique 4',
+        content: 
+`TALK TO YOURSELF LIKE A FRIEND. This begins to shift the narrative. The more you intentionally practice this, the more natural it will become`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`BEFORE WRITING, IDENTIFY SOMETHING ABOUT YOU THAT YOU’RE STRUGGLING WITH—maybe a setback you have encountered or something that makes you feel like you’re not good enough. Reflect on how it makes you feel: sad? embarrassed? angry?`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`WRITE A LETTER TO YOURSELF. Imagine you are a close friend or family member who loves and accepts you unconditionally. In your letter, express compassion, understanding, and acceptance for what you are struggling with. Consider the following as you write:`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`Setbacks happen to everyone—and it’s normal to have things about yourself that you wish were different. Think about how many other people in the world are struggling with the same thing you’re struggling with.`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`Recognize that setbacks are not your fault and that this “thing” may be the result of many factors.`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`In a compassionate, nonjudgmental way, ask yourself whether there are ways you could improve or better cope with the situation. Focus on how constructive changes could make you feel happier, healthier, or more fulfilled.`
+      },
+      { 
+        title: 'Writing exercise',
+        content: 
+`PUT THE LETTER ASIDE for a day or two. Set a prompt to reread it. Then, keep it close by for the next time you have a setback or you’re feeling down`
+      },
+    ] 
+  },
 ]
 
