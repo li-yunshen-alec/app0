@@ -1,13 +1,12 @@
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { GoogleGenerativeAI } from "@google/generative-ai"
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { icons, images } from '../../constants';
-
-import { lessonData } from '../../data'
+import { lessonData } from '../../data';
 import DuolingoButton from '../../components/DuolingoButton';
-
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 
 const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
@@ -28,11 +27,22 @@ async function run(prompt) {
 }
 
 const Profile = () => {
+  const navigation = useNavigation(); // Use the useNavigation hook
   const [activeLesson, setActiveLesson] = useState(undefined);
-  const [lessonSlide, setLessonSlide] = useState(0);
+  const [lessonSlide, setLessonSlide] = useState(1);
 
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
+
+  // Create a ref for the chat
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the bottom of the FlatList whenever result changes
+    if (chatRef.current) {
+      chatRef.current.scrollToIndex({ index: result.length - 1 });
+    }
+  }, [result]);
 
   useEffect(() => {
     if (activeLesson !== undefined) {
@@ -52,13 +62,25 @@ const Profile = () => {
       
       setResult(history);
       
-      model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+      model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less."
+      });
       chat = model.startChat({
         history,
         generationConfig: {
           maxOutputTokens: 100,
         },
       });  
+
+      navigation.setOptions({ tabBarStyle: { display: 'none' } }); // Hide the tab bar
+    } else {
+      navigation.setOptions({ tabBarStyle: {
+        backgroundColor: '#161622',
+        borderTopWidth: 1,
+        borderTopColor: '#232533',
+        height: 84
+      } }); // Show the tab bar
     }
   }, [activeLesson]);
 
@@ -80,9 +102,8 @@ const Profile = () => {
         }
       ];
 
-      setResult(history);
+      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content);
 
-      model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
       chat = model.startChat({
         history,
         generationConfig: {
@@ -94,19 +115,53 @@ const Profile = () => {
     }
   }
   
+  const delayedUpdate = (history, text) => {
+    let result = [...history];
+    result[result.length - 1].parts[0].text = "";
+  
+    const paragraphs = text.split('\n\n');
+    console.log('paragraphs', paragraphs);
+    let currentParagraphIndex = 0;
+  
+    const updateParagraph = () => {
+      if (currentParagraphIndex < paragraphs.length) {
+        const newResult = [...result];
+        const lastItem = newResult[newResult.length - 1];
+  
+        if (lastItem.parts[0].text) {
+          lastItem.parts[0].text += '\n\n' + paragraphs[currentParagraphIndex];
+        } else {
+          lastItem.parts[0].text = paragraphs[currentParagraphIndex];
+        }
+        
+        console.log(currentParagraphIndex, JSON.stringify(newResult));
+  
+        result = newResult; // Update the local result variable
+        setResult(newResult);
+
+        currentParagraphIndex++;
+        setTimeout(updateParagraph, 2000); // Update every 2000 ms
+      }
+    };
+  
+    updateParagraph();
+  };
+    
   const submitPrompt = async () => {
     const result = await run(value);
-    setResult(result);
+    console.log(JSON.stringify(result));
+    const latestResponse = result[result.length - 1];
+    delayedUpdate(result, latestResponse.parts[0].text);
     setValue('');
   }
 
   const renderItem = ({ item, index }) => (
-    <View key={index} className="m-4 space-x-4 rounded-md border border-white p-4">
-      <Text className='text-white'>
+    <View key={index} className="m-4 space-x-4">
+      <Text className='text-white font-psemibold'>
         {`${item.role === 'user' ? 'You:' : 'George:' }`}
       </Text>
       {item.parts.map((item, index) => (
-        <Text className='text-white'>
+        <Text key={index} className='text-white text-base'>
           {item.text}
         </Text>
       ))}
@@ -118,6 +173,7 @@ const Profile = () => {
       {activeLesson !== undefined ? (
         <>
           <FlatList
+            ref={chatRef}
             data={result}
             renderItem={renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -141,22 +197,24 @@ const Profile = () => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
-            <TextInput
-              className='flex-1 text-white font-pregular text-base mt-0.5'
-              value={value}
-              placeholder='Enter prompt'
-              placeholderTextColor='#7b7b8b'
-              onChangeText={handleChangeText}
-            />
-            
-            <TouchableOpacity onPress={submitPrompt}>
-              <Image
-                source={icons.search}
-                className='w-5 h-5'
-                resizeMode='contain'
+          <View className='w-full p-2'>
+            <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
+              <TextInput
+                className='flex-1 text-white font-pregular text-base mt-0.5'
+                value={value}
+                placeholder='Enter prompt'
+                placeholderTextColor='#7b7b8b'
+                onChangeText={handleChangeText}
               />
-            </TouchableOpacity>
+              
+              <TouchableOpacity onPress={submitPrompt}>
+                <Image
+                  source={icons.search}
+                  className='w-5 h-5'
+                  resizeMode='contain'
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         </>
       ) : (
@@ -192,4 +250,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default Profile;
