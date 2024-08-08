@@ -12,20 +12,6 @@ const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
 let chat;
 
-async function run(prompt) {
-  try {
-    const result = await chat.sendMessage(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
-    console.log(text, chat);
-    return chat._history;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-}
-
 const Profile = () => {
   const navigation = useNavigation(); // Use the useNavigation hook
   const [activeLesson, setActiveLesson] = useState(undefined);
@@ -33,6 +19,42 @@ const Profile = () => {
 
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
+  const [options, setOptions] = useState([]);
+
+  async function run(prompt) {
+    try {
+      const result = await chat.sendMessage(prompt);
+      const response = await result.response;
+      const text = response.text();
+      
+      console.log(text, chat);
+      getOptions(chat._history);
+      return chat._history;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }
+  
+  async function getOptions(history) {
+    try {
+      model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less. Your current task is, given a conversation history, provide a list of the 3 best questions the patient could ask about your most recent response where your potential answers to these questions would help them best understand your most recent response.",
+        generationConfig: { responseMimeType: "application/json" }
+      });
+  
+      const prompt = `Based on this chat history, provide a list of the 3 best questions the patient could ask about your most recent response where your potential answers to these questions would help them best understand your most recent response. Use this JSON schema: { "options": [] }. This is the chat history: ${JSON.stringify(history)}`;
+  
+      console.log(prompt);
+      const result = await model.generateContent(prompt);
+      console.log('options', JSON.parse(result.response.text()).options);
+      setOptions(JSON.parse(result.response.text()).options);
+  } catch (error) {
+      console.log(error);
+      return error;
+    }
+  }  
 
   // Create a ref for the chat
   const chatRef = useRef(null);
@@ -185,35 +207,41 @@ const Profile = () => {
               </View>
             )}
           />
-          <View className='flex flex-row gap-2 p-2'>
-            <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-              <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
-                Next
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-              <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
-                Option 1
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View className='w-full p-2'>
-            <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
-              <TextInput
-                className='flex-1 text-white font-pregular text-base mt-0.5'
-                value={value}
-                placeholder='Enter prompt'
-                placeholderTextColor='#7b7b8b'
-                onChangeText={handleChangeText}
-              />
-              
-              <TouchableOpacity onPress={submitPrompt}>
-                <Image
-                  source={icons.search}
-                  className='w-5 h-5'
-                  resizeMode='contain'
+          <View className='h-30'>
+            <ScrollView horizontal>
+              <View className='flex flex-row gap-2 p-2'>
+                <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
+                    Next
+                  </Text>
+                </TouchableOpacity>
+                { options && options.map((option, index) => (
+                  <TouchableOpacity key={index} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                    <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
+            <View className='w-full p-2'>
+              <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
+                <TextInput
+                  className='flex-1 text-white font-pregular text-base mt-0.5'
+                  value={value}
+                  placeholder='Enter prompt'
+                  placeholderTextColor='#7b7b8b'
+                  onChangeText={handleChangeText}
                 />
-              </TouchableOpacity>
+                
+                <TouchableOpacity onPress={submitPrompt}>
+                  <Image
+                    source={icons.search}
+                    className='w-5 h-5'
+                    resizeMode='contain'
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </>
