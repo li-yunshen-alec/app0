@@ -12,14 +12,20 @@ const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
 let chat;
 
+function isExternalLink(uri) {
+  const regex = /^(http|https):\/\//;
+  return regex.test(uri);
+}
+
 const Profile = () => {
   const navigation = useNavigation(); // Use the useNavigation hook
   const [activeLesson, setActiveLesson] = useState(undefined);
-  const [lessonSlide, setLessonSlide] = useState(1);
+  const [lessonSlide, setLessonSlide] = useState(0);
 
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
   const [options, setOptions] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   async function run(prompt) {
     try {
@@ -28,7 +34,6 @@ const Profile = () => {
       const text = response.text();
       
       console.log(text, chat);
-      getOptions(chat._history);
       return chat._history;
     } catch (error) {
       console.log(error);
@@ -38,7 +43,7 @@ const Profile = () => {
   
   async function getOptions(history) {
     try {
-      model = genAI.getGenerativeModel({ 
+      const model = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash",
         systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less. Your current task is, given a conversation history, provide a list of the 3 best questions the patient could ask about your most recent response where your potential answers to these questions would help them best understand your most recent response.",
         generationConfig: { responseMimeType: "application/json" }
@@ -78,7 +83,8 @@ const Profile = () => {
         },
         {
           role: 'model',
-          parts: [{ text: firstSlide.isCover ? lessonData[activeLesson].content[1].content : firstSlide.content }]
+          parts: [{ text: firstSlide.content }],
+          image: firstSlide?.image
         }
       ];
       
@@ -124,7 +130,7 @@ const Profile = () => {
         }
       ];
 
-      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content);
+      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image);
 
       chat = model.startChat({
         history,
@@ -137,18 +143,22 @@ const Profile = () => {
     }
   }
   
-  const delayedUpdate = (history, text) => {
+  const delayedUpdate = (history, text, image) => {
+    setIsTyping(true);
+
+    console.log('history', JSON.stringify(history));
+    getOptions(history);
     let result = [...history];
     result[result.length - 1].parts[0].text = "";
   
     const paragraphs = text.split('\n\n');
-    console.log('paragraphs', paragraphs);
     let currentParagraphIndex = 0;
   
     const updateParagraph = () => {
+      const newResult = [...result];
+      const lastItem = newResult[newResult.length - 1];
+
       if (currentParagraphIndex < paragraphs.length) {
-        const newResult = [...result];
-        const lastItem = newResult[newResult.length - 1];
   
         if (lastItem.parts[0].text) {
           lastItem.parts[0].text += '\n\n' + paragraphs[currentParagraphIndex];
@@ -163,6 +173,13 @@ const Profile = () => {
 
         currentParagraphIndex++;
         setTimeout(updateParagraph, 2000); // Update every 2000 ms
+      } 
+      else {
+        if (image) {
+          lastItem.image = image;
+          setResult(newResult);      
+        }
+        setIsTyping(false);
       }
     };
   
@@ -177,16 +194,31 @@ const Profile = () => {
     setValue('');
   }
 
+  const submitOption = async (prompt) => {
+    const result = await run(prompt);
+    console.log(JSON.stringify(result));
+    const latestResponse = result[result.length - 1];
+    delayedUpdate(result, latestResponse.parts[0].text);
+    setValue('');
+  }
+
   const renderItem = ({ item, index }) => (
-    <View key={index} className="m-4 space-x-4">
+    <View key={index} className="m-4">
       <Text className='text-white font-psemibold'>
         {`${item.role === 'user' ? 'You:' : 'George:' }`}
       </Text>
       {item.parts.map((item, index) => (
-        <Text key={index} className='text-white text-base'>
+        <Text key={index} className='text-white text-base pl-4'>
           {item.text}
         </Text>
       ))}
+      { item.image && (
+        <Image 
+          source={isExternalLink(item.image) ? {uri: item.image} : item.image}
+          className='h-60 my-4'
+          resizeMode='contain'
+        />
+      )}
     </View>
   );
 
@@ -207,17 +239,22 @@ const Profile = () => {
               </View>
             )}
           />
+          { isTyping && (
+            <Text className='text-white text-base pl-4'>
+              Typing...
+            </Text>
+          )}
           <View className='h-30'>
             <ScrollView horizontal>
               <View className='flex flex-row gap-2 p-2'>
-                <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                  <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
+                <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+                  <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
                     Next
                   </Text>
                 </TouchableOpacity>
                 { options && options.map((option, index) => (
-                  <TouchableOpacity key={index} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    <Text className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white">
+                  <TouchableOpacity key={index} onPress={() => submitOption(option)} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+                    <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
                       {option}
                     </Text>
                   </TouchableOpacity>
@@ -235,11 +272,7 @@ const Profile = () => {
                 />
                 
                 <TouchableOpacity onPress={submitPrompt}>
-                  <Image
-                    source={icons.search}
-                    className='w-5 h-5'
-                    resizeMode='contain'
-                  />
+                  <Icon name='send' size={20} color='#FF9C01' />
                 </TouchableOpacity>
               </View>
             </View>
