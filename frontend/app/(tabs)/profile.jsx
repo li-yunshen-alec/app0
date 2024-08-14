@@ -144,7 +144,7 @@ const Profile = () => {
     if (lessonSlide !== lessonData[activeLesson].content.length - 1) {
       let history;
 
-      switch (lessonData[activeLesson].content[lessonSlide + 1].type) {
+      switch (lessonData[activeLesson].content[lessonSlide].type) {
         case 'MULTIPLE_CHOICE':
           history = [
             ...result,
@@ -152,8 +152,11 @@ const Profile = () => {
               role: 'user',
               parts: [{ text: 'Continue.' }]
             },
-
-            lessonData[activeLesson].content[lessonSlide + 1]
+            {
+              ...lessonData[activeLesson].content[lessonSlide],
+              role: 'model',
+              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }]
+            }
           ];
 
           setResult(history);
@@ -167,21 +170,21 @@ const Profile = () => {
             },
             {
               role: 'model',
-              parts: [{ text: lessonData[activeLesson].content[lessonSlide + 1].content }],
+              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }],
             }
           ];
 
-          delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image, lessonSlide + 1);
-
-          chat = model.startChat({
-            history,
-            generationConfig: {
-              maxOutputTokens: 100,
-            },
-          });
-          
-          setLessonSlide(prev => prev + 1);
+          delayedUpdate(history, lessonData[activeLesson].content[lessonSlide].content, lessonData[activeLesson].content[lessonSlide]?.image, lessonSlide + 1);
       }
+
+      chat = model.startChat({
+        history,
+        generationConfig: {
+          maxOutputTokens: 100,
+        },
+      });
+      
+      setLessonSlide(prev => prev + 1);
     }
   }
   

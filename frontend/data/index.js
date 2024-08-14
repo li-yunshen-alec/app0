@@ -7,18 +7,6 @@ export const lessonData = [
     title: 'Introduction',
     content: [
       { 
-        title: 'Tutorial Quiz', 
-        type: 'MULTIPLE_CHOICE',
-        content: 
-`What's the #1 thing that separates those who succeed at losing weight vs. those who don't?`,
-        options: [
-          { name: 'Mindset', icon: <Icon name='arrow-back' size={28} color='#FF9C01' /> },
-          { name: 'Eating habits', icon: <Icon name='arrow-back' size={28} color='#FF9C01' /> },
-          { name: 'Starting weight', icon: <Icon name='arrow-back' size={28} color='#FF9C01' /> },
-        ],
-        image: 'https://media1.tenor.com/m/OciTf1yC7PUAAAAd/cat-funny.gif'
-      },
-      { 
         title: '',
         content: 
 `Your mindset is the way you think of yourself. 
@@ -33,6 +21,19 @@ Thoughts like, "I'm a healthy eater" or the opposite - "I'm a lazy person" make 
 
 An overweight individual may be capable of eating healthy over a short period of time, but without an effective mindset, the individual would revert right back to their old eating habits.`,
         image: 'https://media1.tenor.com/m/lP0bw19omAIAAAAd/cat-fat.gif'
+      },
+      { 
+        title: 'Tutorial Quiz', 
+        type: 'MULTIPLE_CHOICE',
+        content: 
+`What's the #1 thing that separates those who succeed at losing weight vs. those who don't?`,
+        options: [
+          { name: 'Mindset', icon: <Icon name='arrow-back' size={28} color='#FF9C01' />, feedback: 'Your mindset determines your actions and the overall outcomes of your weight-loss journey.' },
+          { name: 'Eating habits', icon: <Icon name='arrow-back' size={28} color='#FF9C01' />, feedback: 'Eating habits may be important, but mindset is more important!' },
+          { name: 'Starting weight', icon: <Icon name='arrow-back' size={28} color='#FF9C01' />, feedback: 'Where you start is important, but your mindset determines where you end up!' },
+        ],
+        answer: 'Mindset',
+        image: 'https://media1.tenor.com/m/OciTf1yC7PUAAAAd/cat-funny.gif'
       },
       { 
         title: 'Negative mindsets lead to poor results', 
