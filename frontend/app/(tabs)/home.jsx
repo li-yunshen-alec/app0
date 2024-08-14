@@ -108,10 +108,10 @@ const Home = () => {
         <Icon name="add-circle-outline" color="white" size={26} />
         <View className="flex-1 space-y-1">
           <Text className="text-sm font-medium leading-none text-white">
-            Push Notifications
+            Hey! Need general tips/advice?
           </Text>
           <Text className="text-sm text-muted-foreground text-white">
-            Send notifications to device.
+            Open up DMs with George.
           </Text>
         </View>
       </TouchableOpacity>

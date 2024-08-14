@@ -7,6 +7,7 @@ import { lessonData } from '../../data';
 import DuolingoButton from '../../components/DuolingoButton';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
+import MultipleChoice from '../../components/MultipleChoice';
 
 const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
@@ -67,9 +68,27 @@ const Profile = () => {
   useEffect(() => {
     // Scroll to the bottom of the FlatList whenever result changes
     if (chatRef.current) {
-      chatRef.current.scrollToIndex({ index: result.length - 1 });
+      chatRef.current.scrollToEnd();
     }
   }, [result]);
+
+  const formatData = (item) => {
+    switch (item.type) {
+      case 'MULTIPLE_CHOICE':
+        return {
+          ...item,
+          role: 'model',
+          parts: [{ text: item.content }]
+        };
+      default:
+        return {
+          role: 'model',
+          parts: [{ text: item.content }],
+          image: item?.image,
+          slideNumber: lessonSlide + 1
+        }
+    }
+  }
 
   useEffect(() => {
     if (activeLesson !== undefined) {
@@ -81,12 +100,7 @@ const Profile = () => {
           role: 'user',
           parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
         },
-        {
-          role: 'model',
-          parts: [{ text: firstSlide.content }],
-          image: firstSlide?.image,
-          slideNumber: lessonSlide + 1
-        }
+        formatData(firstSlide)
       ];
       
       setResult(history);
@@ -103,6 +117,8 @@ const Profile = () => {
       });  
 
       navigation.setOptions({ tabBarStyle: { display: 'none' } }); // Hide the tab bar
+
+      setLessonSlide(prev => prev + 1);
     } 
     else { // Clicked off active lesson
       navigation.setOptions({ tabBarStyle: {
@@ -126,28 +142,46 @@ const Profile = () => {
   
   const handleNext = () => {
     if (lessonSlide !== lessonData[activeLesson].content.length - 1) {
-      const history = [
-        ...result,
-        {
-          role: 'user',
-          parts: [{ text: 'Continue.' }]
-        },
-        {
-          role: 'model',
-          parts: [{ text: lessonData[activeLesson].content[lessonSlide + 1].content }],
-        }
-      ];
+      let history;
 
-      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image, lessonSlide + 1);
+      switch (lessonData[activeLesson].content[lessonSlide + 1].type) {
+        case 'MULTIPLE_CHOICE':
+          history = [
+            ...result,
+            {
+              role: 'user',
+              parts: [{ text: 'Continue.' }]
+            },
 
-      chat = model.startChat({
-        history,
-        generationConfig: {
-          maxOutputTokens: 100,
-        },
-      });
-      
-      setLessonSlide(prev => prev + 1);
+            lessonData[activeLesson].content[lessonSlide + 1]
+          ];
+
+          setResult(history);
+          break;          
+        default:
+          history = [
+            ...result,
+            {
+              role: 'user',
+              parts: [{ text: 'Continue.' }]
+            },
+            {
+              role: 'model',
+              parts: [{ text: lessonData[activeLesson].content[lessonSlide + 1].content }],
+            }
+          ];
+
+          delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image, lessonSlide + 1);
+
+          chat = model.startChat({
+            history,
+            generationConfig: {
+              maxOutputTokens: 100,
+            },
+          });
+          
+          setLessonSlide(prev => prev + 1);
+      }
     }
   }
   
@@ -213,30 +247,37 @@ const Profile = () => {
     setValue('');
   }
 
-  const renderItem = ({ item, index }) => (
-    <View key={index} className="m-4 mx-6">
-      <Text className='text-white font-psemibold'>
-        {`${item.role === 'user' ? 'You' : 'George' }`}
-      </Text>
-      {item.parts.map((item, index) => (
-        <Text key={index} className='text-white text-base'>
-          {item.text}
-        </Text>
-      ))}
-      { item.image && (
-        <Image 
-          source={isExternalLink(item.image) ? {uri: item.image} : item.image}
-          className='h-60 my-4'
-          resizeMode='contain'
-        />
-      )}
-      { item.slideNumber && (
-        <Text className='text-white text-base'>
-          {item.slideNumber}
-        </Text>
-      )}
-    </View>
-  );
+  const renderItem = ({ item, index }) => {
+    switch (item.type) {
+      case 'MULTIPLE_CHOICE':
+        return <MultipleChoice item={item} index={index} />
+      default:
+        return (
+          <View key={index} className="m-4 mx-6">
+            <Text className='text-white font-psemibold'>
+              {`${item.role === 'user' ? 'You' : 'George' }`}
+            </Text>
+            {item.parts.map((item, index) => (
+              <Text key={index} className='text-white text-base'>
+                {item.text}
+              </Text>
+            ))}
+            { item.image && (
+              <Image 
+                source={isExternalLink(item.image) ? {uri: item.image} : item.image}
+                className='h-60 my-4'
+                resizeMode='contain'
+              />
+            )}
+            { item.slideNumber && (
+              <Text className='text-white text-base'>
+                {item.slideNumber}
+              </Text>
+            )}
+          </View>
+        )
+    }
+  };
 
   return (
     <SafeAreaView className='bg-primary h-full flex flex-col space-between'>
