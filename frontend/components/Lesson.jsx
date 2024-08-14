@@ -14,10 +14,10 @@ function isExternalLink(uri) {
   return regex.test(uri);
 }
 
-const Lesson = ({ activeLesson, setActiveLesson }) => {
+const Lesson = ({ activeLesson, setActiveLesson, setSlideshowMode }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const renderItem = ({ item, index }) => (
-    <View className='h-[100vh] w-[100vw] pt-8'>
+    <View className='h-[100vh] w-[100vw] pt-12'>
       { item.isCover ? (
         <View className='h-full'>
           
@@ -63,9 +63,13 @@ const Lesson = ({ activeLesson, setActiveLesson }) => {
   return (
     <Modal>
       <SafeAreaView className='relative bg-primary w-full h-full border-r-emerald-950'>
-        <View className='absolute top-0 left-0 px-4'>
-          <TouchableOpacity className='z-50' onPress={() => setActiveLesson(undefined)}>
+        <View className='absolute top-0 left-0 z-50 px-4 pb-4 w-full flex flex-row items-center justify-between'>
+          <TouchableOpacity className='' onPress={() => setActiveLesson(undefined)}>
             <Icon name='arrow-back' size={20} color='#FF9C01' />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => setSlideshowMode(false)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+            <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Chat</Text>
           </TouchableOpacity>
         </View>
         
