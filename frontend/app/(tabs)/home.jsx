@@ -13,6 +13,7 @@ import { auth, db } from '../../lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import HabitForm from '../../components/HabitForm'
+import General from '../../components/General'
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -55,10 +56,12 @@ const Home = () => {
   useFetchUserData(userData);
 
   const [habitFormOpen, setHabitFormOpen] = useState(false);
+  const [generalOpen, setGeneralOpen] = useState(false);
 
   return (
     <SafeAreaView className='bg-primary h-full'>
       { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
+      { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
       { userData && (
         <FlatList 
           ListHeaderComponent={() => (
@@ -101,6 +104,17 @@ const Home = () => {
           )}
         />
       )}
+      <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
+        <Icon name="add-circle-outline" color="white" size={26} />
+        <View className="flex-1 space-y-1">
+          <Text className="text-sm font-medium leading-none text-white">
+            Push Notifications
+          </Text>
+          <Text className="text-sm text-muted-foreground text-white">
+            Send notifications to device.
+          </Text>
+        </View>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }

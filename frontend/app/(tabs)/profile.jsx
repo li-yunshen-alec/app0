@@ -84,7 +84,8 @@ const Profile = () => {
         {
           role: 'model',
           parts: [{ text: firstSlide.content }],
-          image: firstSlide?.image
+          image: firstSlide?.image,
+          slideNumber: lessonSlide + 1
         }
       ];
       
@@ -102,13 +103,20 @@ const Profile = () => {
       });  
 
       navigation.setOptions({ tabBarStyle: { display: 'none' } }); // Hide the tab bar
-    } else {
+    } 
+    else { // Clicked off active lesson
       navigation.setOptions({ tabBarStyle: {
         backgroundColor: '#161622',
         borderTopWidth: 1,
         borderTopColor: '#232533',
         height: 84
       } }); // Show the tab bar
+
+      setLessonSlide(0);
+      setValue('');
+      setResult([]);
+      setOptions([]);
+      setIsTyping(false);    
     }
   }, [activeLesson]);
 
@@ -126,11 +134,11 @@ const Profile = () => {
         },
         {
           role: 'model',
-          parts: [{ text: lessonData[activeLesson].content[lessonSlide + 1].content }]
+          parts: [{ text: lessonData[activeLesson].content[lessonSlide + 1].content }],
         }
       ];
 
-      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image);
+      delayedUpdate(history, lessonData[activeLesson].content[lessonSlide + 1].content, lessonData[activeLesson].content[lessonSlide + 1]?.image, lessonSlide + 1);
 
       chat = model.startChat({
         history,
@@ -143,7 +151,7 @@ const Profile = () => {
     }
   }
   
-  const delayedUpdate = (history, text, image) => {
+  const delayedUpdate = (history, text, image, slideNumber) => {
     setIsTyping(true);
 
     console.log('history', JSON.stringify(history));
@@ -177,8 +185,11 @@ const Profile = () => {
       else {
         if (image) {
           lastItem.image = image;
-          setResult(newResult);      
         }
+        if (slideNumber) {
+          lastItem.slideNumber = slideNumber
+        }
+        setResult(newResult);
         setIsTyping(false);
       }
     };
@@ -203,12 +214,12 @@ const Profile = () => {
   }
 
   const renderItem = ({ item, index }) => (
-    <View key={index} className="m-4">
+    <View key={index} className="m-4 mx-6">
       <Text className='text-white font-psemibold'>
-        {`${item.role === 'user' ? 'You:' : 'George:' }`}
+        {`${item.role === 'user' ? 'You' : 'George' }`}
       </Text>
       {item.parts.map((item, index) => (
-        <Text key={index} className='text-white text-base pl-4'>
+        <Text key={index} className='text-white text-base'>
           {item.text}
         </Text>
       ))}
@@ -218,6 +229,11 @@ const Profile = () => {
           className='h-60 my-4'
           resizeMode='contain'
         />
+      )}
+      { item.slideNumber && (
+        <Text className='text-white text-base'>
+          {item.slideNumber}
+        </Text>
       )}
     </View>
   );
