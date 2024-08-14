@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, RefreshControl, Alert, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
@@ -14,6 +14,7 @@ import { doc, getDoc } from 'firebase/firestore'
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import HabitForm from '../../components/HabitForm'
 import General from '../../components/General'
+import ProgressGraph from '../../components/ProgressGraph'
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -59,62 +60,65 @@ const Home = () => {
   const [generalOpen, setGeneralOpen] = useState(false);
 
   return (
-    <SafeAreaView className='bg-primary h-full'>
-      { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
-      { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
-      { userData && (
-        <FlatList 
-          ListHeaderComponent={() => (
-            <View className='my-6 px-4 space-y-6'>
-              <View className='justify-between items-start flex-row mb-6'>
-                <View>
-                  <Text className='font-pmedium text-sm text-gray-100'>Welcome Back</Text>
-                  <Text className='text-2xl font-psemibold text-white'>asdjfk</Text>
-                </View>
+    <SafeAreaView className='bg-primary'>
+      <ScrollView>
+        { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
+        { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
+        <View className='my-6 px-4 space-y-6'>
+          <View className='justify-between items-start flex-row mb-6'>
+            <View>
+              <Text className='font-pmedium text-sm text-gray-100'>Monday</Text>
+              <Text className='text-2xl font-psemibold text-white'>Aug 12</Text>
+            </View>
 
-                <View className='mt-1.5'>
-                  <Image
-                    source={images.logoSmall} 
-                    className='w-9 h-10'
-                    resizeMode='contain'
-                  />
-                </View>
+            <View className='mt-1.5'>
+              <View className='flex flex-row items-center justify-center bg-stone-800 px-2 rounded-full'>
+                <Icon name="attach-money" color="#fbbf24" size={26} />
+                <Text className='font-pregular text-white text-2xl mt-1 mr-1'>126</Text>
               </View>
             </View>
-          )}        
-          data={userData.habits}
-          keyExtractor={(item, index) => index}
-          renderItem={({ item, index }) => (
-            <View key={index} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
-              <Text className="text-white">{item.name}</Text>
+          </View>
+        </View>
+        { userData && (
+          <>
+            <View className=''>
+              {userData.habits.map((item, index) => (
+                <View key={index} className="m-2 mx-4 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
+                  <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-center items-center'>
+                    <Icon name="local-fire-department" color="#fbbf24" size={20} />
+                    <Text className='font-pregular text-white text-lg'>12</Text>
+                  </View>
+                  <Text className="text-white font-medium text-base">{item.name}</Text>
+                </View>
+              ))}
             </View>
-          )}
-          ListFooterComponent={() => (
-            <TouchableOpacity onPress={() => setHabitFormOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
+
+            <TouchableOpacity onPress={() => setHabitFormOpen(true)} className="bg-amber-700 m-4 flex flex-row items-center space-x-4 rounded-xl p-4">
               <Icon name="add-circle-outline" color="white" size={26} />
               <View className="flex-1 space-y-1">
                 <Text className="text-sm font-medium leading-none text-white">
-                  Push Notifications
+                  Create promise
                 </Text>
                 <Text className="text-sm text-muted-foreground text-white">
-                  Send notifications to device.
+                  Make a new promise to yourself.
                 </Text>
               </View>
             </TouchableOpacity>
-          )}
-        />
-      )}
-      <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
-        <Icon name="add-circle-outline" color="white" size={26} />
-        <View className="flex-1 space-y-1">
-          <Text className="text-sm font-medium leading-none text-white">
-            Hey! Need general tips/advice?
-          </Text>
-          <Text className="text-sm text-muted-foreground text-white">
-            Open up DMs with George.
-          </Text>
-        </View>
-      </TouchableOpacity>
+          </>
+        )}
+        <ProgressGraph />
+        <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
+          <Icon name="add-circle-outline" color="white" size={26} />
+          <View className="flex-1 space-y-1">
+            <Text className="text-sm font-medium leading-none text-white">
+              Hey! Need general tips/advice?
+            </Text>
+            <Text className="text-sm text-muted-foreground text-white">
+              Open up DMs with George.
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   )
 }

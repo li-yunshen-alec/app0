@@ -25,7 +25,7 @@ const HabitForm = ({ setHabitFormOpen, userData }) => {
       <SafeAreaView className='bg-primary w-full h-full border-r-emerald-950'>
         <View className='w-full min-h-[85vh] px-4 my-6'>
           <Text className='text-2xl text-white text-semibold mt-10 font-psemibold'>
-            Create a habit
+            Create a promise
           </Text>
           
           <FormField 
@@ -36,7 +36,7 @@ const HabitForm = ({ setHabitFormOpen, userData }) => {
           />
 
           <CustomButton 
-            title='Sign up'
+            title='Submit'
             handlePress={submit}
             containerStyles='mt-7'
             isLoading={isSubmitting}
