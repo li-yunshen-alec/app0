@@ -8,6 +8,7 @@ import DuolingoButton from '../../components/DuolingoButton';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { useNavigation } from '@react-navigation/native'; // Import the useNavigation hook
 import MultipleChoice from '../../components/MultipleChoice';
+import Lesson from '../../components/Lesson';
 
 const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
@@ -19,6 +20,8 @@ function isExternalLink(uri) {
 }
 
 const Profile = () => {
+  const [slideshowMode, setSlideshowMode] = useState(false);
+
   const navigation = useNavigation(); // Use the useNavigation hook
   const [activeLesson, setActiveLesson] = useState(undefined);
   const [lessonSlide, setLessonSlide] = useState(0);
@@ -286,57 +289,72 @@ const Profile = () => {
     <SafeAreaView className='bg-primary h-full flex flex-col space-between'>
       {activeLesson !== undefined ? (
         <>
-          <FlatList
-            ref={chatRef}
-            data={result}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ListHeaderComponent={() => (
-              <View className='px-4'>
-                <TouchableOpacity className='z-50' onPress={() => setActiveLesson(undefined)}>
-                  <Icon name='arrow-back' size={20} color='#FF9C01' />
-                </TouchableOpacity>
-              </View>
+          <View className='px-4 pb-4 flex flex-row items-center justify-between'>
+            <TouchableOpacity className='z-50' onPress={() => setActiveLesson(undefined)}>
+              <Icon name='arrow-back' size={20} color='#FF9C01' />
+            </TouchableOpacity>
+
+            { !slideshowMode ? (
+              <TouchableOpacity onPress={() => setSlideshowMode(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+                <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Slideshow</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setSlideshowMode(false)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+                <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Chat</Text>
+              </TouchableOpacity>
             )}
-          />
-          { isTyping && (
-            <Text className='text-white text-base pl-4'>
-              Typing...
-            </Text>
-          )}
-          <View className='h-30'>
-            <ScrollView horizontal>
-              <View className='flex flex-row gap-2 p-2'>
-                <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
-                  <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
-                    Next
-                  </Text>
-                </TouchableOpacity>
-                { options && options.map((option, index) => (
-                  <TouchableOpacity key={index} onPress={() => submitOption(option)} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
-                    <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
-                      {option}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
-            <View className='w-full p-2'>
-              <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
-                <TextInput
-                  className='flex-1 text-white font-pregular text-base mt-0.5'
-                  value={value}
-                  placeholder='Enter prompt'
-                  placeholderTextColor='#7b7b8b'
-                  onChangeText={handleChangeText}
-                />
-                
-                <TouchableOpacity onPress={submitPrompt}>
-                  <Icon name='send' size={20} color='#FF9C01' />
-                </TouchableOpacity>
-              </View>
-            </View>
           </View>
+          { !slideshowMode ? (
+            <>
+              <FlatList
+                ref={chatRef}
+                data={result}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+
+              />
+              { isTyping && (
+                <Text className='text-white text-base pl-4'>
+                  Typing...
+                </Text>
+              )}
+              <View className='h-30'>
+                <ScrollView horizontal>
+                  <View className='flex flex-row gap-2 p-2'>
+                    <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+                      <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
+                        Next
+                      </Text>
+                    </TouchableOpacity>
+                    { options && options.map((option, index) => (
+                      <TouchableOpacity key={index} onPress={() => submitOption(option)} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+                        <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
+                          {option}
+                        </Text>
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                </ScrollView>
+                <View className='w-full p-2'>
+                  <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
+                    <TextInput
+                      className='flex-1 text-white font-pregular text-base mt-0.5'
+                      value={value}
+                      placeholder='Enter prompt'
+                      placeholderTextColor='#7b7b8b'
+                      onChangeText={handleChangeText}
+                    />
+                    
+                    <TouchableOpacity onPress={submitPrompt}>
+                      <Icon name='send' size={20} color='#FF9C01' />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </>
+          ) : (
+            <Lesson activeLesson={activeLesson} setActiveLesson={setActiveLesson} setSlideshowMode={setSlideshowMode} />
+          )}
         </>
       ) : (
         <FlatList 

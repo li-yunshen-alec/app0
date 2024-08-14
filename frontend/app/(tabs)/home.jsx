@@ -64,7 +64,7 @@ const Home = () => {
       <ScrollView>
         { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
         { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
-        <View className='my-6 px-4 space-y-6'>
+        <View className='mt-6 px-4 space-y-6'>
           <View className='justify-between items-start flex-row mb-6'>
             <View>
               <Text className='font-pmedium text-sm text-gray-100'>Monday</Text>
@@ -79,34 +79,52 @@ const Home = () => {
             </View>
           </View>
         </View>
+
+        <View className="m-4 mx-6">
+          <Text className='text-white font-psemibold'>
+            George
+          </Text>
+          <Text className='text-white text-base'>
+            Hey! You've kept all your promises for 12 days now. Good work!
+          </Text>
+        </View>
+
+        <ProgressGraph />
+
         { userData && (
           <>
-            <View className=''>
+            <View className=' m-4'>
+              <View className='justify-between items-center flex-row mb-2'>
+                <Text className='ml-1 text-xl font-plight text-white'>My Promises</Text>
+
+                <TouchableOpacity onPress={() => {}} className='flex flex-row items-center justify-center bg-stone-800 p-1 rounded-full'>
+                  <View className='p-1 bg-amber-900 rounded-full'>
+                    <Icon name="question-mark" color="white" size={20} />
+                  </View>
+                </TouchableOpacity>
+
+              </View>
+              
               {userData.habits.map((item, index) => (
-                <View key={index} className="m-2 mx-4 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
-                  <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-center items-center'>
+                <View key={index} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
+                  <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>
                     <Icon name="local-fire-department" color="#fbbf24" size={20} />
                     <Text className='font-pregular text-white text-lg'>12</Text>
                   </View>
                   <Text className="text-white font-medium text-base">{item.name}</Text>
                 </View>
               ))}
-            </View>
 
-            <TouchableOpacity onPress={() => setHabitFormOpen(true)} className="bg-amber-700 m-4 flex flex-row items-center space-x-4 rounded-xl p-4">
-              <Icon name="add-circle-outline" color="white" size={26} />
-              <View className="flex-1 space-y-1">
-                <Text className="text-sm font-medium leading-none text-white">
-                  Create promise
-                </Text>
-                <Text className="text-sm text-muted-foreground text-white">
-                  Make a new promise to yourself.
-                </Text>
+              <View className='justify-end items-center flex-row mb-2'>
+
+                <TouchableOpacity onPress={() => setHabitFormOpen(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+                  <Icon name="add-circle-outline" color="white" size={20} />
+                  <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Promise</Text>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+            </View>
           </>
         )}
-        <ProgressGraph />
         <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
           <Icon name="add-circle-outline" color="white" size={26} />
           <View className="flex-1 space-y-1">
