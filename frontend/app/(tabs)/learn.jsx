@@ -132,6 +132,8 @@ const Learn = () => {
         },
       });  
 
+      getOptions(cleanHistory);
+
       navigation.setOptions({ tabBarStyle: { display: 'none' } }); // Hide the tab bar
 
       setLessonSlide(prev => prev + 1);
@@ -206,7 +208,7 @@ const Learn = () => {
             }
           ];
 
-          delayedUpdate(history, lessonData[activeLesson].content[lessonSlide].content, lessonData[activeLesson].content[lessonSlide]?.image, lessonSlide + 1);
+          delayedUpdate(history.slice(0, -1), lessonData[activeLesson].content[lessonSlide].content, lessonData[activeLesson].content[lessonSlide]?.image, lessonSlide + 1);
           
           cleanHistory = [
             ...cleanResult,
@@ -235,11 +237,13 @@ const Learn = () => {
   }
   
   const delayedUpdate = (history, text, image, slideNumber) => {
+    setOptions([]);
     setIsTyping(true);
 
-    getOptions(history);
-    let result = [...history];
-    result[result.length - 1].parts[0].text = "";
+    let result = [...history, {
+      role: 'model',
+      parts: [{ text: "" }],
+    }];
   
     const paragraphs = text.split('\n\n');
     let currentParagraphIndex = 0;
@@ -271,6 +275,7 @@ const Learn = () => {
         }
         setResult(newResult);
         setIsTyping(false);
+        getOptions(newResult);
       }
     };
   
@@ -278,17 +283,18 @@ const Learn = () => {
   };
     
   const submitPrompt = async () => {
-    const result = await run(value);
-    const latestResponse = result[result.length - 1];
-    delayedUpdate(result, latestResponse.parts[0].text);
+    const prompt = value;
     setValue('');
+
+    const res = await run(prompt);
+    const latestResponse = res[res.length - 1];
+    delayedUpdate([...result, { role: 'user', parts: [{ text: value }] }], latestResponse.parts[0].text);
   }
 
   const submitOption = async (prompt) => {
-    const result = await run(prompt);
-    const latestResponse = result[result.length - 1];
-    delayedUpdate(result, latestResponse.parts[0].text);
-    setValue('');
+    const res = await run(prompt);
+    const latestResponse = res[res.length - 1];
+    delayedUpdate([...result, { role: 'user', parts: [{ text: prompt }] }], latestResponse.parts[0].text);
   }
 
   const renderItem = ({ item, index }) => {
@@ -315,7 +321,7 @@ const Learn = () => {
             )}
             { item.slideNumber && (
               <Text className='text-white text-base'>
-                {item.slideNumber}
+                {`${item.slideNumber} of ${lessonData[activeLesson].content.length}`}
               </Text>
             )}
           </View>
