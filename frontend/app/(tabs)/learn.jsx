@@ -28,16 +28,18 @@ const Learn = () => {
 
   const [value, setValue] = useState('');
   const [result, setResult] = useState([]);
+  const [cleanResult, setCleanResult] = useState([]);
   const [options, setOptions] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
   async function run(prompt) {
     try {
+      console.log('chat history before msg', chat._history);
       const result = await chat.sendMessage(prompt);
       const response = await result.response;
       const text = response.text();
       
-      console.log(text, chat);
+      console.log('chat history after msg', chat._history);
       return chat._history;
     } catch (error) {
       console.log(error);
@@ -57,7 +59,6 @@ const Learn = () => {
   
       console.log(prompt);
       const result = await model.generateContent(prompt);
-      console.log('options', JSON.parse(result.response.text()).options);
       setOptions(JSON.parse(result.response.text()).options);
   } catch (error) {
       console.log(error);
@@ -95,7 +96,6 @@ const Learn = () => {
 
   useEffect(() => {
     if (activeLesson !== undefined) {
-      console.log(lessonData[activeLesson]);
       const firstSlide = lessonData[activeLesson].content[0];
 
       const history = [
@@ -107,13 +107,26 @@ const Learn = () => {
       ];
       
       setResult(history);
+
+      const cleanHistory = [
+        {
+          role: 'user',
+          parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
+        },
+        {
+          role: 'model',
+          parts: [{ text: firstSlide.content }]
+        },
+      ];
+
+      setCleanResult(cleanHistory);
       
       model = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash",
         systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less."
       });
       chat = model.startChat({
-        history,
+        history: cleanHistory,
         generationConfig: {
           maxOutputTokens: 100,
         },
@@ -146,6 +159,7 @@ const Learn = () => {
   const handleNext = () => {
     if (lessonSlide !== lessonData[activeLesson].content.length - 1) {
       let history;
+      let cleanHistory;
 
       switch (lessonData[activeLesson].content[lessonSlide].type) {
         case 'MULTIPLE_CHOICE':
@@ -163,6 +177,21 @@ const Learn = () => {
           ];
 
           setResult(history);
+
+          cleanHistory = [
+            ...cleanResult,
+            {
+              role: 'user',
+              parts: [{ text: 'Continue.' }]
+            },
+            {
+              role: 'model',
+              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }]
+            }
+          ];
+
+          setCleanResult(cleanHistory);
+
           break;          
         default:
           history = [
@@ -178,10 +207,24 @@ const Learn = () => {
           ];
 
           delayedUpdate(history, lessonData[activeLesson].content[lessonSlide].content, lessonData[activeLesson].content[lessonSlide]?.image, lessonSlide + 1);
+          
+          cleanHistory = [
+            ...cleanResult,
+            {
+              role: 'user',
+              parts: [{ text: 'Continue.' }]
+            },
+            {
+              role: 'model',
+              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }],
+            }
+          ];
+
+          setCleanResult(cleanHistory);
       }
 
       chat = model.startChat({
-        history,
+        history: cleanHistory,
         generationConfig: {
           maxOutputTokens: 100,
         },
@@ -194,7 +237,6 @@ const Learn = () => {
   const delayedUpdate = (history, text, image, slideNumber) => {
     setIsTyping(true);
 
-    console.log('history', JSON.stringify(history));
     getOptions(history);
     let result = [...history];
     result[result.length - 1].parts[0].text = "";
@@ -214,8 +256,6 @@ const Learn = () => {
           lastItem.parts[0].text = paragraphs[currentParagraphIndex];
         }
         
-        console.log(currentParagraphIndex, JSON.stringify(newResult));
-  
         result = newResult; // Update the local result variable
         setResult(newResult);
 
@@ -239,7 +279,6 @@ const Learn = () => {
     
   const submitPrompt = async () => {
     const result = await run(value);
-    console.log(JSON.stringify(result));
     const latestResponse = result[result.length - 1];
     delayedUpdate(result, latestResponse.parts[0].text);
     setValue('');
@@ -247,7 +286,6 @@ const Learn = () => {
 
   const submitOption = async (prompt) => {
     const result = await run(prompt);
-    console.log(JSON.stringify(result));
     const latestResponse = result[result.length - 1];
     delayedUpdate(result, latestResponse.parts[0].text);
     setValue('');
