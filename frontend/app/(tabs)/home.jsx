@@ -15,8 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import HabitForm from '../../components/HabitForm'
 import General from '../../components/General'
 import ProgressGraph from '../../components/ProgressGraph'
-import ContributionGraph from '../../components/ContributionGraph'
-import CalendarHeatmap from '../../components/ContributionGraph'
+import ContributionGraph from '../../components/CalendarHeatmap'
+import CalendarHeatmap from '../../components/CalendarHeatmap'
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -61,6 +61,42 @@ const Home = () => {
   const [habitFormOpen, setHabitFormOpen] = useState(false);
   const [generalOpen, setGeneralOpen] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const handleIncrement = (item) => {
+    const habits = userData?.habits;
+    let commitsData = userData?.commitsData || [];
+  
+    if (!habits) return;
+  
+    const habit = habits.find(habit => habit.name === item.name);
+    const currentDate = new Date().toISOString().split('T')[0];
+      
+    if (habit) {
+      if (habit?.lastIncremented === currentDate) {
+        console.log('Habit has already been incremented today.');
+      } else {
+        const updatedHabit = {
+          ...habit,
+          count: habit.count + 1,
+          lastIncremented: currentDate
+        };
+        dispatch({ type: 'UPDATE_HABIT', payload: updatedHabit });
+
+        const existingCommit = commitsData.find(commit => commit.date === currentDate);
+        if (existingCommit) {
+          existingCommit.count += 1;
+        } else {
+          commitsData.push({ date: currentDate, count: 1 });
+        }
+
+        dispatch({ type: 'UPDATE_COMMITS_DATA', payload: commitsData });
+      }
+    } else {
+      console.log('Habit not found.');
+    }
+  };
+  
   return (
     <SafeAreaView className='bg-primary'>
       <ScrollView>
@@ -108,13 +144,13 @@ const Home = () => {
               </View>
               
               {userData.habits.map((item, index) => (
-                <View key={index} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
+                <TouchableOpacity key={index} onPress={() => handleIncrement(item)} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
                   <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>
                     <Icon name="local-fire-department" color="#fbbf24" size={20} />
-                    <Text className='font-pregular text-white text-lg'>12</Text>
+                    <Text className='font-pregular text-white text-lg'>{item.count}</Text>
                   </View>
                   <Text className="text-white font-medium text-base">{item.name}</Text>
-                </View>
+                </TouchableOpacity>
               ))}
 
               <View className='justify-end items-center flex-row mb-2'>

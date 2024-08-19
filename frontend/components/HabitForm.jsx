@@ -15,7 +15,7 @@ const HabitForm = ({ setHabitFormOpen, userData }) => {
   const dispatch = useDispatch();
 
   const submit = async () => {
-    dispatch({ type: 'SET_USER_DATA', payload: { ...userData, habits: [...userData.habits, { name: form.name }] } })
+    dispatch({ type: 'SET_USER_DATA', payload: { ...userData, habits: [...userData.habits, { name: form.name, count: 0 }] } })
   
     setHabitFormOpen(false);
   };

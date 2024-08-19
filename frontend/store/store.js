@@ -23,6 +23,24 @@ function reducer(state = initialState, action) {
         ...state,
         userData: action.payload,
       };
+    case 'UPDATE_HABIT':
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          habits: state.userData.habits.map(habit =>
+            habit.name === action.payload.name ? action.payload : habit
+          )
+        }
+      };  
+    case 'UPDATE_COMMITS_DATA':
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          commitsData: action.payload,
+        }
+      };  
     default:
       return state;
   }
