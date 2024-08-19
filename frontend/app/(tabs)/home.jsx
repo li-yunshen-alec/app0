@@ -15,6 +15,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import HabitForm from '../../components/HabitForm'
 import General from '../../components/General'
 import ProgressGraph from '../../components/ProgressGraph'
+import ContributionGraph from '../../components/ContributionGraph'
+import CalendarHeatmap from '../../components/ContributionGraph'
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -89,7 +91,7 @@ const Home = () => {
           </Text>
         </View>
 
-        <ProgressGraph />
+        <CalendarHeatmap />
 
         { userData && (
           <>
