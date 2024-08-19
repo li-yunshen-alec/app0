@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Pie from '../../components/Pie'
 
 const Profile = () => {
   return (
@@ -56,6 +57,14 @@ const Profile = () => {
               </Text>
             </View>
           </View>
+        </View>
+
+        <View className="m-4 mx-6">
+          <Text className='text-white text-lg font-psemibold'>
+            Total repetitions
+          </Text>
+          
+          <Pie />
         </View>
       </ScrollView>
     </SafeAreaView>
