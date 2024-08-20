@@ -144,12 +144,17 @@ const Home = () => {
               </View>
               
               {userData.habits.map((item, index) => (
-                <TouchableOpacity key={index} onPress={() => handleIncrement(item)} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
-                  <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>
-                    <Icon name="local-fire-department" color="#fbbf24" size={20} />
-                    <Text className='font-pregular text-white text-lg'>{item.count}</Text>
+                <TouchableOpacity key={index} onPress={() => handleIncrement(item)} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center justify-between space-x-4 p-2">
+                  <View className='flex flex-row items-center space-x-4'>
+                    <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>
+                      <Icon name="local-fire-department" color="#fbbf24" size={20} />
+                      <Text className='font-pregular text-white text-lg'>{item.count}</Text>
+                    </View>
+                    <Text className="text-white font-medium text-base">{item.name}</Text>
                   </View>
-                  <Text className="text-white font-medium text-base">{item.name}</Text>
+                  <TouchableOpacity>
+                    <Icon name='more-vert' color="white" size={20} />
+                  </TouchableOpacity>
                 </TouchableOpacity>
               ))}
 

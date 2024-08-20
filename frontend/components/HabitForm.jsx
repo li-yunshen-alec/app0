@@ -15,11 +15,14 @@ const HabitForm = ({ setHabitFormOpen, userData }) => {
   const dispatch = useDispatch();
 
   const submit = async () => {
-    dispatch({ type: 'SET_USER_DATA', payload: { ...userData, habits: [...userData.habits, { name: form.name, count: 0 }] } })
+    dispatch({
+      type: 'ADD_HABIT',
+      payload: { name: form.name, count: 0 }
+    });
   
     setHabitFormOpen(false);
   };
-
+  
   return (
     <Modal>
       <SafeAreaView className='bg-primary w-full h-full border-r-emerald-950'>

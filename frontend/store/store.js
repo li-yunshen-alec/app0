@@ -1,4 +1,6 @@
 import { createStore } from 'redux';
+import { auth, db } from '../lib/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 
 const initialState = {
   isLoading: false,
@@ -23,30 +25,56 @@ function reducer(state = initialState, action) {
         ...state,
         userData: action.payload,
       };
+    case 'ADD_HABIT':
+      const newHabits = [...state.userData.habits, action.payload];
+      const updatedUserDataWithNewHabit = {
+        ...state.userData,
+        habits: newHabits,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithNewHabit);
+      return {
+        ...state,
+        userData: updatedUserDataWithNewHabit,
+      };  
     case 'UPDATE_HABIT':
+      const updatedHabits = state.userData.habits.map(habit =>
+        habit.name === action.payload.name ? action.payload : habit
+      );
+      const updatedUserDataWithHabits = {
+        ...state.userData,
+        habits: updatedHabits,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithHabits);
       return {
         ...state,
-        userData: {
-          ...state.userData,
-          habits: state.userData.habits.map(habit =>
-            habit.name === action.payload.name ? action.payload : habit
-          )
-        }
-      };  
+        userData: updatedUserDataWithHabits,
+      };
     case 'UPDATE_COMMITS_DATA':
+      const updatedUserDataWithCommits = {
+        ...state.userData,
+        commitsData: action.payload,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithCommits);
       return {
         ...state,
-        userData: {
-          ...state.userData,
-          commitsData: action.payload,
-        }
-      };  
+        userData: updatedUserDataWithCommits,
+      };
     default:
       return state;
   }
 }
   
 const store = createStore(reducer);
+
+function updateUserDataInFirestore(userData) {
+  const userDocRef = doc(db, 'users', auth.currentUser.uid); // Assuming userId is part of userData
+  setDoc(userDocRef, userData)
+    .then(() => console.log("UserData updated in Firestore"))
+    .catch(error => console.error("Error updating UserData: ", error));
+}
 
 export default store;
   

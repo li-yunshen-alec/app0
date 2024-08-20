@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Dimensions } from 'react-native';
 import { ContributionGraph } from 'react-native-chart-kit';
 import { useSelector } from 'react-redux';
@@ -12,12 +12,16 @@ const CalendarHeatmap = () => {
     setContainerWidth(width);
   };
 
+  useEffect(() => {
+    console.log('userData', userData)
+  }, [userData]);
+
   return (
     <View onLayout={onLayout} className='m-4'>
       <ContributionGraph
         values={userData?.commitsData || []}
         endDate={new Date()}
-        numDays={105}
+        numDays={90}
         width={containerWidth}
         height={220}
         chartConfig={{
