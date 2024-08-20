@@ -90,6 +90,28 @@ function reducer(state = initialState, action) {
         ...state,
         userData: updatedUserDataWithCommits,
       };
+    case 'UPDATE_USER_DATA':
+      const updatedUserData = {
+        ...state.userData,
+        ...action.payload,
+      };
+    
+      updateUserDataInFirestore(updatedUserData);
+      return {
+        ...state,
+        userData: updatedUserData,
+      };        
+    case 'UPDATE_COINS':
+      const updatedUserDataWithCoins = {
+        ...state.userData,
+        coins: action.payload,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithCoins);
+      return {
+        ...state,
+        userData: updatedUserDataWithCoins,
+      };  
     default:
       return state;
   }

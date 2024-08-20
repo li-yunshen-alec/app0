@@ -90,6 +90,8 @@ const Home = () => {
         };
         dispatch({ type: 'UPDATE_HABIT', payload: updatedHabit });
 
+        const updatedHabits = habits.map(h => h.name === item.name ? updatedHabit : h);
+
         const existingCommit = commitsData.find(commit => commit.date === currentDate);
         if (existingCommit) {
           existingCommit.count += 1;
@@ -98,6 +100,23 @@ const Home = () => {
         }
 
         dispatch({ type: 'UPDATE_COMMITS_DATA', payload: commitsData });
+
+        const allHabitsIncremented = updatedHabits.every(
+          habit => habit.lastIncremented === currentDate
+        );  
+
+        if (allHabitsIncremented) {
+          const rewardCoins = 50;
+          const updatedCoins = (userData.coins || 0) + rewardCoins;
+          
+          dispatch({ type: 'UPDATE_COINS', payload: updatedCoins });
+  
+          Alert.alert(
+            'Congratulations!',
+            `You've kept all your promises today! 🎉\nYou've earned ${rewardCoins} coins! 💰`,
+            [{ text: 'Awesome!', style: 'default' }]
+          );
+        }  
       }
     } else {
       console.log('Habit not found.');
