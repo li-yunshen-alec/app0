@@ -116,11 +116,20 @@ const Home = () => {
     setIsEditing(true);
     setHabitFormOpen(true);
   }
+
+  const handleDeletePressed = () => {
+    dispatch({
+      type: 'DELETE_HABIT',
+      payload: selectedItem
+    });
+
+    setSelectedItem(null);
+  }
   
   return (
     <SafeAreaView className='bg-primary'>
       <ScrollView>
-        { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} isEditing={isEditing} selectedItem={selectedItem} />}
+        { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} isEditing={isEditing} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />}
         { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
 
         <View className='mt-6 px-4 space-y-6'>
@@ -243,7 +252,7 @@ const Home = () => {
             <Text className="text-white font-medium text-base">Edit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className=" flex flex-row items-center space-x-4 p-2">
+          <TouchableOpacity onPress={handleDeletePressed} className=" flex flex-row items-center space-x-4 p-2">
             <View className='w-14 h-12 rounded-xl flex flex-col justify-center items-center'>
               <Icon name="delete-outline" color="#f87171" size={30} />
             </View>

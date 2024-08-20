@@ -8,13 +8,14 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 import { ScalingDot } from 'react-native-animated-pagination-dots';
+import { router } from 'expo-router';
 
 function isExternalLink(uri) {
   const regex = /^(http|https):\/\//;
   return regex.test(uri);
 }
 
-const Lesson = ({ activeLesson, setActiveLesson, setSlideshowMode }) => {
+const Lesson = ({ activeLesson, setSlideshowMode }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
   const renderItem = ({ item, index }) => (
     <View className='h-[100vh] w-[100vw] pt-12'>
@@ -64,7 +65,7 @@ const Lesson = ({ activeLesson, setActiveLesson, setSlideshowMode }) => {
     <Modal>
       <SafeAreaView className='relative bg-primary w-full h-full border-r-emerald-950'>
         <View className='absolute top-0 left-0 z-50 px-4 pb-4 w-full flex flex-row items-center justify-between'>
-          <TouchableOpacity className='' onPress={() => setActiveLesson(undefined)}>
+          <TouchableOpacity className='' onPress={() => router.replace('/learn')}>
             <Icon name='arrow-back' size={20} color='#FF9C01' />
           </TouchableOpacity>
 

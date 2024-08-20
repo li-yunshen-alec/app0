@@ -1,11 +1,12 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { router } from 'expo-router'
 
-const DuolingoButton = ({ item, setActiveLesson }) => {
+const DuolingoButton = ({ item }) => {
   return (
     <TouchableOpacity
       className='bg-secondary w-full h-20 rounded-md relative'
-      onPress={() => setActiveLesson(item.id)}
+      onPress={() => router.push(`/lesson/${item.id}`)}
     >
       <View className='justify-center flex-1 ml-3 gap-y-1'>
         <Text className='text-sm text-white font-psemibold'>{item.title && item.title}</Text>

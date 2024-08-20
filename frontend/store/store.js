@@ -51,6 +51,34 @@ function reducer(state = initialState, action) {
         ...state,
         userData: updatedUserDataWithHabits,
       };
+    case 'UPDATE_HABIT_NAME':
+      const updatedHabitNames = state.userData.habits.map(habit =>
+        habit.name === action.selectedItem.name ? action.payload : habit
+      );
+      const updatedUserDataWithHabitNames = {
+        ...state.userData,
+        habits: updatedHabitNames,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithHabitNames);
+      return {
+        ...state,
+        userData: updatedUserDataWithHabitNames,
+      };
+    case 'DELETE_HABIT':
+      const filteredHabits = state.userData.habits.filter(
+        habit => habit.name !== action.payload.name
+      );
+      const updatedUserDataWithDeletedHabit = {
+        ...state.userData,
+        habits: filteredHabits,
+      };
+
+      updateUserDataInFirestore(updatedUserDataWithDeletedHabit);
+      return {
+        ...state,
+        userData: updatedUserDataWithDeletedHabit,
+      };  
     case 'UPDATE_COMMITS_DATA':
       const updatedUserDataWithCommits = {
         ...state.userData,

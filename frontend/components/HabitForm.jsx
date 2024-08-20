@@ -6,7 +6,7 @@ import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 
 
-const HabitForm = ({ setHabitFormOpen, userData, isEditing, selectedItem }) => {
+const HabitForm = ({ setHabitFormOpen, userData, isEditing, selectedItem, setSelectedItem }) => {
   const [form, setForm] = useState({
     name: '',
   });
@@ -33,6 +33,7 @@ const HabitForm = ({ setHabitFormOpen, userData, isEditing, selectedItem }) => {
       });
     }
   
+    setSelectedItem(null);
     setHabitFormOpen(false);
   };
   
