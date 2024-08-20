@@ -1,5 +1,5 @@
 import { View, Text, FlatList, Image, RefreshControl, Alert, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import SearchInput from '../../components/SearchInput'
@@ -17,6 +17,7 @@ import General from '../../components/General'
 import ProgressGraph from '../../components/ProgressGraph'
 import ContributionGraph from '../../components/CalendarHeatmap'
 import CalendarHeatmap from '../../components/CalendarHeatmap'
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const Home = () => {
 
   const [habitFormOpen, setHabitFormOpen] = useState(false);
   const [generalOpen, setGeneralOpen] = useState(false);
+  const [promiseOptionsOpen, setPromiseOptionsOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -96,12 +98,21 @@ const Home = () => {
       console.log('Habit not found.');
     }
   };
+
+  const bottomSheetRef = useRef(null);
+
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const handleSheetOpen = () => bottomSheetRef.current.expand()
   
   return (
     <SafeAreaView className='bg-primary'>
       <ScrollView>
         { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
         { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
+
         <View className='mt-6 px-4 space-y-6'>
           <View className='justify-between items-start flex-row mb-6'>
             <View>
@@ -152,8 +163,17 @@ const Home = () => {
                     </View>
                     <Text className="text-white font-medium text-base">{item.name}</Text>
                   </View>
-                  <TouchableOpacity>
-                    <Icon name='more-vert' color="white" size={20} />
+                  <TouchableOpacity
+                    className='w-14 h-14 flex justify-center items-center'
+                    onPress={(e) => {
+                      e.stopPropagation();
+                      
+                      setPromiseOptionsOpen(true);
+
+                      handleSheetOpen();
+                    }}
+                  >
+                    <Icon name='more-vert' color="white" size={30} />
                   </TouchableOpacity>
                 </TouchableOpacity>
               ))}
@@ -180,6 +200,31 @@ const Home = () => {
           </View>
         </TouchableOpacity>
       </ScrollView>
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        onChange={handleSheetChanges}
+        snapPoints={['30%']}
+        enablePanDownToClose
+        onClose={() => setPromiseOptionsOpen(false)}
+        index={-1}
+      >
+        <BottomSheetView style={{ padding: 8 }}>
+          <TouchableOpacity className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
+            <View className='w-14 h-10 rounded-xl flex flex-col justify-center items-center'>
+              <Icon name="edit" color="#fbbf24" size={30} />
+            </View>
+            <Text className="text-white font-medium text-base">Edit</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
+            <View className='w-14 h-10 rounded-xl flex flex-col justify-center items-center'>
+              <Icon name="delete-outline" color="#fbbf24" size={30} />
+            </View>
+            <Text className="text-white font-medium text-base">Delete</Text>
+          </TouchableOpacity>
+        </BottomSheetView>
+      </BottomSheet>
     </SafeAreaView>
   )
 }
