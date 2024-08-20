@@ -18,6 +18,7 @@ import ProgressGraph from '../../components/ProgressGraph'
 import ContributionGraph from '../../components/CalendarHeatmap'
 import CalendarHeatmap from '../../components/CalendarHeatmap'
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { useNavigation } from 'expo-router'
 
 const useFetchUserData = (userData) => {
   const dispatch = useDispatch();
@@ -63,7 +64,11 @@ const Home = () => {
   const [generalOpen, setGeneralOpen] = useState(false);
   const [promiseOptionsOpen, setPromiseOptionsOpen] = useState(false);
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(false);
+
   const dispatch = useDispatch();
+  const navigation = useNavigation(); 
 
   const handleIncrement = (item) => {
     const habits = userData?.habits;
@@ -105,12 +110,17 @@ const Home = () => {
     console.log('handleSheetChanges', index);
   }, []);
 
-  const handleSheetOpen = () => bottomSheetRef.current.expand()
+  const handleSheetOpen = () => bottomSheetRef.current.expand();
+
+  const handleEditPressed = () => {
+    setIsEditing(true);
+    setHabitFormOpen(true);
+  }
   
   return (
     <SafeAreaView className='bg-primary'>
       <ScrollView>
-        { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} />}
+        { habitFormOpen  && <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} isEditing={isEditing} selectedItem={selectedItem} />}
         { generalOpen  && <General setGeneralOpen={setGeneralOpen} userData={userData} />}
 
         <View className='mt-6 px-4 space-y-6'>
@@ -169,8 +179,14 @@ const Home = () => {
                       e.stopPropagation();
                       
                       setPromiseOptionsOpen(true);
-
+                  
+                      navigation.setOptions({ tabBarStyle: { display: 'none' } });
+                  
                       handleSheetOpen();
+                  
+                      console.log('setting item', item);
+                  
+                      setSelectedItem(item);
                     }}
                   >
                     <Icon name='more-vert' color="white" size={30} />
@@ -206,22 +222,32 @@ const Home = () => {
         onChange={handleSheetChanges}
         snapPoints={['30%']}
         enablePanDownToClose
-        onClose={() => setPromiseOptionsOpen(false)}
+        onClose={() => {
+          setPromiseOptionsOpen(false);
+          navigation.setOptions({ tabBarStyle: {
+            backgroundColor: '#161622',
+            borderTopWidth: 1,
+            borderTopColor: '#232533',
+            height: 84
+          } });
+        }}
         index={-1}
+        backgroundStyle={{ backgroundColor: '#161622'}}
+        handleIndicatorStyle={{ backgroundColor: '#FF9C01'}}
       >
         <BottomSheetView style={{ padding: 8 }}>
-          <TouchableOpacity className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
-            <View className='w-14 h-10 rounded-xl flex flex-col justify-center items-center'>
-              <Icon name="edit" color="#fbbf24" size={30} />
+          <TouchableOpacity onPress={handleEditPressed} className=" flex flex-row items-center space-x-4 p-2">
+            <View className='w-14 h-12 rounded-xl flex flex-col justify-center items-center'>
+              <Icon name="edit" color="#fff" size={30} />
             </View>
             <Text className="text-white font-medium text-base">Edit</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity className="my-2 bg-amber-900 rounded-xl flex flex-row items-center space-x-4 p-2">
-            <View className='w-14 h-10 rounded-xl flex flex-col justify-center items-center'>
-              <Icon name="delete-outline" color="#fbbf24" size={30} />
+          <TouchableOpacity className=" flex flex-row items-center space-x-4 p-2">
+            <View className='w-14 h-12 rounded-xl flex flex-col justify-center items-center'>
+              <Icon name="delete-outline" color="#f87171" size={30} />
             </View>
-            <Text className="text-white font-medium text-base">Delete</Text>
+            <Text className="text-red-400 font-medium text-base">Delete</Text>
           </TouchableOpacity>
         </BottomSheetView>
       </BottomSheet>

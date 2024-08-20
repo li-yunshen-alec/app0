@@ -1,24 +1,37 @@
 import { Modal, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import FormField from './FormField';
 import CustomButton from './CustomButton';
 import { useDispatch } from 'react-redux';
 
 
-const HabitForm = ({ setHabitFormOpen, userData }) => {
+const HabitForm = ({ setHabitFormOpen, userData, isEditing, selectedItem }) => {
   const [form, setForm] = useState({
     name: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  useEffect(() => {
+    if (selectedItem) setForm(selectedItem);
+  }, [selectedItem]);
+
   const dispatch = useDispatch();
 
   const submit = async () => {
-    dispatch({
-      type: 'ADD_HABIT',
-      payload: { name: form.name, count: 0 }
-    });
+    if (selectedItem) {
+      dispatch({
+        type: 'UPDATE_HABIT_NAME',
+        payload: form,
+        selectedItem
+      })
+    }
+    else {
+      dispatch({
+        type: 'ADD_HABIT',
+        payload: { name: form.name, count: 0 }
+      });
+    }
   
     setHabitFormOpen(false);
   };

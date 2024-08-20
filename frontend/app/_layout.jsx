@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import 'react-native-url-polyfill/auto'
 import { Provider } from 'react-redux';
 import store from '../store/store'
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -29,13 +30,15 @@ const RootLayout = () => {
   if (!fontsLoaded && !error) return null;
   
   return (
-    <Provider store={store}>
-      <Stack>
-        <Stack.Screen name='index' options={{ headerShown: false }}/>
-        <Stack.Screen name='(auth)' options={{ headerShown: false }}/>
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }}/>
-      </Stack>
-    </Provider>
+    <GestureHandlerRootView>
+      <Provider store={store}>
+        <Stack>
+          <Stack.Screen name='index' options={{ headerShown: false }}/>
+          <Stack.Screen name='(auth)' options={{ headerShown: false }}/>
+          <Stack.Screen name='(tabs)' options={{ headerShown: false }}/>
+        </Stack>
+      </Provider>
+    </GestureHandlerRootView>
   )
 }
 
