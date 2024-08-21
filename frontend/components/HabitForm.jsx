@@ -27,6 +27,7 @@ const HabitForm = ({ setHabitFormOpen, userData, isEditing, selectedItem, setSel
       })
     }
     else {
+      console.log('adding habit', { name: form.name, count: 0 });
       dispatch({
         type: 'ADD_HABIT',
         payload: { name: form.name, count: 0 }

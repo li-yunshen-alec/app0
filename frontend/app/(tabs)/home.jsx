@@ -20,33 +20,6 @@ import CalendarHeatmap from '../../components/CalendarHeatmap'
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useNavigation } from 'expo-router'
 
-const useFetchUserData = (userData) => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const currentUser = auth.currentUser;
-
-        if (currentUser) {
-          const userDocRef = doc(db, "users", currentUser.uid);
-          const userSnapshot = await getDoc(userDocRef);
-
-          if (userSnapshot.exists()) {
-            const userData = userSnapshot.data();
-            console.log(userData);
-            dispatch({ type: 'SET_USER_DATA', payload: userData });
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user data: ", error);
-      }
-    };
-
-    if (!userData && auth.currentUser) fetchUserData();
-  }, [auth.currentUser, dispatch]);
-};
-
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false);
 
@@ -57,8 +30,6 @@ const Home = () => {
   }
 
   const userData = useSelector(state => state.userData);
-
-  useFetchUserData(userData);
 
   const [habitFormOpen, setHabitFormOpen] = useState(false);
   const [generalOpen, setGeneralOpen] = useState(false);
@@ -192,7 +163,7 @@ const Home = () => {
 
               </View>
               
-              {userData.habits.map((item, index) => (
+              {userData && userData.habits && userData.habits.map((item, index) => (
                 <TouchableOpacity key={index} onPress={() => handleIncrement(item)} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center justify-between space-x-4 p-2">
                   <View className='flex flex-row items-center space-x-4'>
                     <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>

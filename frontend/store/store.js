@@ -1,12 +1,38 @@
 import { createStore } from 'redux';
-import { auth, db } from '../lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   isLoading: false,
   isLoggedIn: false,
   userData: null
 };
+
+const getUserDataFromLocalStorage = async () => {
+  try {
+    const keys = await AsyncStorage.getAllKeys();
+    if (!keys.includes('userData')) {
+      const initialUserData = JSON.stringify({});
+      await AsyncStorage.setItem('userData', initialUserData);
+      return JSON.parse(initialUserData);
+    } else {
+      const userData = await AsyncStorage.getItem('userData');
+      console.log('userData', userData);
+      return JSON.parse(userData);
+    }
+  } catch (error) {
+    console.error("Error retrieving user data from storage: ", error);
+    return null;
+  }
+};
+
+async function updateUserDataInStorage(userData) {
+  try {
+    await AsyncStorage.setItem('userData', JSON.stringify(userData));
+    console.log("UserData updated in storage");
+  } catch (error) {
+    console.error("Error updating UserData in storage: ", error);
+  }
+}
 
 function reducer(state = initialState, action) {
   switch (action.type) {
@@ -26,13 +52,13 @@ function reducer(state = initialState, action) {
         userData: action.payload,
       };
     case 'ADD_HABIT':
-      const newHabits = [...state.userData.habits, action.payload];
+      const newHabits = state.userData?.habits ? [...state.userData.habits, action.payload] : [action.payload];
       const updatedUserDataWithNewHabit = {
         ...state.userData,
         habits: newHabits,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithNewHabit);
+      updateUserDataInStorage(updatedUserDataWithNewHabit);
       return {
         ...state,
         userData: updatedUserDataWithNewHabit,
@@ -46,7 +72,7 @@ function reducer(state = initialState, action) {
         habits: updatedHabits,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithHabits);
+      updateUserDataInStorage(updatedUserDataWithHabits);
       return {
         ...state,
         userData: updatedUserDataWithHabits,
@@ -60,7 +86,7 @@ function reducer(state = initialState, action) {
         habits: updatedHabitNames,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithHabitNames);
+      updateUserDataInStorage(updatedUserDataWithHabitNames);
       return {
         ...state,
         userData: updatedUserDataWithHabitNames,
@@ -74,7 +100,7 @@ function reducer(state = initialState, action) {
         habits: filteredHabits,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithDeletedHabit);
+      updateUserDataInStorage(updatedUserDataWithDeletedHabit);
       return {
         ...state,
         userData: updatedUserDataWithDeletedHabit,
@@ -85,7 +111,7 @@ function reducer(state = initialState, action) {
         commitsData: action.payload,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithCommits);
+      updateUserDataInStorage(updatedUserDataWithCommits);
       return {
         ...state,
         userData: updatedUserDataWithCommits,
@@ -96,7 +122,7 @@ function reducer(state = initialState, action) {
         ...action.payload,
       };
     
-      updateUserDataInFirestore(updatedUserData);
+      updateUserDataInStorage(updatedUserData);
       return {
         ...state,
         userData: updatedUserData,
@@ -107,7 +133,7 @@ function reducer(state = initialState, action) {
         coins: action.payload,
       };
 
-      updateUserDataInFirestore(updatedUserDataWithCoins);
+      updateUserDataInStorage(updatedUserDataWithCoins);
       return {
         ...state,
         userData: updatedUserDataWithCoins,
@@ -117,14 +143,13 @@ function reducer(state = initialState, action) {
   }
 }
   
-const store = createStore(reducer);
+const initializeStore = async () => {
+  const userData = await getUserDataFromLocalStorage();
+  const preloadedState = {
+    ...initialState,
+    userData,
+  };
+  return createStore(reducer, preloadedState);
+};
 
-function updateUserDataInFirestore(userData) {
-  const userDocRef = doc(db, 'users', auth.currentUser.uid); // Assuming userId is part of userData
-  setDoc(userDocRef, userData)
-    .then(() => console.log("UserData updated in Firestore"))
-    .catch(error => console.error("Error updating UserData: ", error));
-}
-
-export default store;
-  
+export default initializeStore;

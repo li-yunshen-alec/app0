@@ -1,14 +1,25 @@
 import { SplashScreen, Stack } from 'expo-router'
 import { useFonts } from 'expo-font'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-url-polyfill/auto'
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import store from '../store/store'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import initializeStore from '../store/store';
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+  const [store, setStore] = useState(null);
+
+  useEffect(() => {
+    const initStore = async () => {
+      const initializedStore = await initializeStore();
+      setStore(initializedStore);
+    };
+    initStore();
+  }, []);
+
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
@@ -28,6 +39,7 @@ const RootLayout = () => {
   }, [fontsLoaded, error]);
 
   if (!fontsLoaded && !error) return null;
+  if (!store) return null;
   
   return (
     <GestureHandlerRootView>
