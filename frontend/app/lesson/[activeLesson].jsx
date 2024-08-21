@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'; // Import the useNavig
 import MultipleChoice from '../../components/MultipleChoice';
 import Lesson from '../../components/Lesson';
 import { router, useLocalSearchParams } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
@@ -34,6 +35,87 @@ const Chat = () => {
   const [options, setOptions] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
+  useEffect(() => {
+    const loadConversation = async () => {
+      try {
+        const savedResult = await AsyncStorage.getItem(`@conversation_result_${activeLesson}`);
+        const savedCleanResult = await AsyncStorage.getItem(`@conversation_cleanResult_${activeLesson}`);
+  
+        if (savedResult && savedCleanResult) {
+          setResult(JSON.parse(savedResult));
+          setCleanResult(JSON.parse(savedCleanResult));
+        }
+      } catch (error) {
+        console.error('Failed to load conversation:', error);
+      }
+    };
+  
+    loadConversation();
+  }, [activeLesson]);
+  
+  useEffect(() => {
+    if (result.length > 0) {
+      AsyncStorage.setItem(`@conversation_result_${activeLesson}`, JSON.stringify(result));
+    }
+  }, [result, activeLesson]);
+  
+  useEffect(() => {
+    if (cleanResult.length > 0) {
+      AsyncStorage.setItem(`@conversation_cleanResult_${activeLesson}`, JSON.stringify(cleanResult));
+    }
+  }, [cleanResult, activeLesson]);
+
+  const resetConversation = async () => {
+    try {
+      await AsyncStorage.removeItem(`@conversation_result_${activeLesson}`);
+      await AsyncStorage.removeItem(`@conversation_cleanResult_${activeLesson}`);
+      
+      setResult([]);
+      setCleanResult([]);
+      setLessonSlide(0);
+      setValue('');
+      setOptions([]);
+      setIsTyping(false);
+  
+      const firstSlide = lessonData[activeLesson].content[0];
+      const history = [
+        {
+          role: 'user',
+          parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
+        },
+        formatData(firstSlide)
+      ];
+      setResult(history);
+  
+      const cleanHistory = [
+        {
+          role: 'user',
+          parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
+        },
+        {
+          role: 'model',
+          parts: [{ text: firstSlide.content }]
+        },
+      ];
+      setCleanResult(cleanHistory);
+  
+      model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less."
+      });
+      chat = model.startChat({
+        history: cleanHistory,
+        generationConfig: {
+          maxOutputTokens: 100,
+        },
+      });  
+  
+      getOptions(cleanHistory);
+    } catch (error) {
+      console.error('Failed to reset conversation:', error);
+    }
+  };  
+  
   async function run(prompt) {
     try {
       console.log('chat history before msg', chat._history);
@@ -338,15 +420,21 @@ const Chat = () => {
           <Icon name='arrow-back' size={20} color='#FF9C01' />
         </TouchableOpacity>
 
-        { !slideshowMode ? (
-          <TouchableOpacity onPress={() => setSlideshowMode(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
-            <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Slideshow</Text>
+        <View className='flex flex-row items-center justify-end gap-2'>
+          <TouchableOpacity onPress={resetConversation} className='flex flex-row items-center justify-center bg-red-600 px-2 py-1 rounded-full'>
+            <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Reset</Text>
           </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={() => setSlideshowMode(false)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
-            <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Chat</Text>
-          </TouchableOpacity>
-        )}
+
+          { !slideshowMode ? (
+            <TouchableOpacity onPress={() => setSlideshowMode(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+              <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Slideshow</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => setSlideshowMode(false)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+              <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Chat</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
       { !slideshowMode ? (
         <>
