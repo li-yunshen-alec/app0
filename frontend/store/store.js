@@ -11,7 +11,7 @@ const getUserDataFromLocalStorage = async () => {
   try {
     const keys = await AsyncStorage.getAllKeys();
     if (!keys.includes('userData')) {
-      const initialUserData = JSON.stringify({});
+      const initialUserData = JSON.stringify({ unlockedLessonIds: [0], habits: [], commitsData: [], coins: 1000 });
       await AsyncStorage.setItem('userData', initialUserData);
       return JSON.parse(initialUserData);
     } else {
@@ -137,7 +137,20 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         userData: updatedUserDataWithCoins,
-      };  
+      };
+    case 'RESET_USER_DATA':
+      const resetUserData = {
+        unlockedLessonIds: [0],
+        habits: [],
+        commitsData: [],
+        coins: 1000,
+      };
+      
+      updateUserDataInStorage(resetUserData);
+      return {
+        ...state,
+        userData: resetUserData,
+      };      
     default:
       return state;
   }

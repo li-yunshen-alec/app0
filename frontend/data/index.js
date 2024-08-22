@@ -9,6 +9,14 @@ export const lessonData = [
       { 
         title: '',
         content: 
+`How come some people succeed at losing weight where others fail?
+
+The answer lies in the mindset.`,
+        image: images.catQuestion
+      },
+      { 
+        title: '',
+        content: 
 `Your mindset is the way you think of yourself. 
 
 Thoughts like, "I'm a healthy eater" or the opposite - "I'm a lazy person" make up the mindset.`,

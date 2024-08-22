@@ -38,12 +38,14 @@ const Chat = () => {
   useEffect(() => {
     const loadConversation = async () => {
       try {
-        const savedResult = await AsyncStorage.getItem(`@conversation_result_${activeLesson}`);
-        const savedCleanResult = await AsyncStorage.getItem(`@conversation_cleanResult_${activeLesson}`);
+        const savedData = await AsyncStorage.getItem(`@conversation_data_${activeLesson}`);
   
-        if (savedResult && savedCleanResult) {
-          setResult(JSON.parse(savedResult));
-          setCleanResult(JSON.parse(savedCleanResult));
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          setResult(parsedData.result);
+          setCleanResult(parsedData.cleanResult);
+          setLessonSlide(parsedData.lessonSlide);
+          setOptions(parsedData.options);
         }
       } catch (error) {
         console.error('Failed to load conversation:', error);
@@ -52,23 +54,28 @@ const Chat = () => {
   
     loadConversation();
   }, [activeLesson]);
-  
+    
   useEffect(() => {
-    if (result.length > 0) {
-      AsyncStorage.setItem(`@conversation_result_${activeLesson}`, JSON.stringify(result));
-    }
-  }, [result, activeLesson]);
+    const saveConversation = async () => {
+      try {
+        const dataToSave = {
+          result,
+          cleanResult,
+          lessonSlide,
+          options,
+        };
+        await AsyncStorage.setItem(`@conversation_data_${activeLesson}`, JSON.stringify(dataToSave));
+      } catch (error) {
+        console.error('Failed to save conversation:', error);
+      }
+    };
   
-  useEffect(() => {
-    if (cleanResult.length > 0) {
-      AsyncStorage.setItem(`@conversation_cleanResult_${activeLesson}`, JSON.stringify(cleanResult));
-    }
-  }, [cleanResult, activeLesson]);
-
+    saveConversation();
+  }, [result, cleanResult, lessonSlide, options, activeLesson]);
+  
   const resetConversation = async () => {
     try {
-      await AsyncStorage.removeItem(`@conversation_result_${activeLesson}`);
-      await AsyncStorage.removeItem(`@conversation_cleanResult_${activeLesson}`);
+      await AsyncStorage.removeItem(`@conversation_data_${activeLesson}`);
       
       setResult([]);
       setCleanResult([]);
@@ -114,8 +121,8 @@ const Chat = () => {
     } catch (error) {
       console.error('Failed to reset conversation:', error);
     }
-  };  
-  
+  };
+    
   async function run(prompt) {
     try {
       console.log('chat history before msg', chat._history);
@@ -145,7 +152,7 @@ const Chat = () => {
       const result = await model.generateContent(prompt);
       setOptions(JSON.parse(result.response.text()).options);
   } catch (error) {
-      console.log(error);
+      console.log('Error getting options:', error);
       return error;
     }
   }  
@@ -399,7 +406,7 @@ const Chat = () => {
             { item.image && (
               <Image 
                 source={isExternalLink(item.image) ? {uri: item.image} : item.image}
-                className='h-60 my-4'
+                className='h-60 w-full my-4'
                 resizeMode='contain'
               />
             )}

@@ -1,10 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 const MultipleChoice = ({ item, index }) => {
 
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [answerFeedback, setAnswerFeedback] = useState(undefined);
+
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.userData);
 
   const handleClick = (option) => {
     setSelectedOption(option);
@@ -16,6 +20,17 @@ const MultipleChoice = ({ item, index }) => {
       const isCorrect = selectedOption.name === item.answer;
 
       if (isCorrect) {
+        const rewardCoins = 10;
+        const updatedCoins = (userData.coins || 0) + rewardCoins;
+
+        dispatch({ type: 'UPDATE_COINS', payload: updatedCoins });
+
+        Alert.alert(
+          'Well Done!',
+          `Correct answer! You've earned ${rewardCoins} coins! 💰`,
+          [{ text: 'Awesome!', style: 'default' }]
+        );
+
         setAnswerFeedback(
           <Text className='text-white text-base'>
             Correct! {selectedOption.feedback}

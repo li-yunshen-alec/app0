@@ -2,8 +2,15 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Pie from '../../components/Pie'
+import { useDispatch } from 'react-redux'
 
 const Profile = () => {
+  const dispatch = useDispatch();
+
+  const handleResetUserData = () => {
+    dispatch({ type: 'RESET_USER_DATA' });
+  };
+
   return (
     <SafeAreaView className='bg-primary'>
       <ScrollView className='h-full'>
@@ -26,10 +33,11 @@ const Profile = () => {
             </View>
 
             <TouchableOpacity
-                activeOpacity={0.7}
-                className={`bg-secondary rounded-xl h-12 justify-center items-center`}
+              onPress={handleResetUserData}
+              activeOpacity={0.7}
+              className={`bg-secondary rounded-xl h-12 justify-center items-center`}
             >
-              <Text className={`text-primary font-psemibold text-lg`}>Sign up/login</Text>
+              <Text className={`text-primary font-psemibold text-lg`}>Reset data</Text>
             </TouchableOpacity>
           </View>
         </View>

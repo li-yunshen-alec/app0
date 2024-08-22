@@ -335,8 +335,8 @@ const Chat = () => {
   return (
     <SafeAreaView className='bg-primary h-full flex flex-col space-between'>
       <View className='px-4 pb-4 flex flex-row items-center justify-between'>
-        <TouchableOpacity className='z-50' onPress={() => router.replace('/learn')}>
-          <Icon name='arrow-back' size={20} color='#FF9C01' />
+        <TouchableOpacity onPress={() => router.replace('/home')} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+          <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Skip</Text>
         </TouchableOpacity>
 
         { !slideshowMode ? (
