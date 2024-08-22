@@ -15,7 +15,7 @@ const Profile = () => {
     <SafeAreaView className='bg-primary'>
       <ScrollView className='h-full'>
         <View className="m-4 mx-6">
-          <Text className='text-white text-lg font-psemibold'>
+          <Text className='text-white text-lg font-psemibold mb-2'>
             Account
           </Text>
           <View className='w-full bg-stone-800 rounded-md p-4'>
@@ -27,7 +27,7 @@ const Profile = () => {
                   Guest
                 </Text>
                 <Text className='text-white text-sm'>
-                  User id: 348199
+                  User ID: 348199
                 </Text>
               </View>
             </View>
@@ -43,7 +43,7 @@ const Profile = () => {
         </View>
 
         <View className="m-4 mx-6">
-          <Text className='text-white text-lg font-psemibold'>
+          <Text className='text-white text-lg font-psemibold mb-2'>
             My records
           </Text>
           <View className='flex flex-row space-between gap-2'>
@@ -68,7 +68,7 @@ const Profile = () => {
         </View>
 
         <View className="m-4 mx-6">
-          <Text className='text-white text-lg font-psemibold'>
+          <Text className='text-white text-lg font-psemibold mb-2'>
             Total repetitions
           </Text>
           

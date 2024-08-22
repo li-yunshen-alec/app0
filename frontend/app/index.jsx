@@ -318,8 +318,8 @@ const Chat = () => {
             { item.image && (
               <Image 
                 source={isExternalLink(item.image) ? {uri: item.image} : item.image}
-                className='h-60 my-4'
-                resizeMode='contain'
+                className='h-60 w-full my-4'
+                resizeMode='cover'
               />
             )}
             { item.slideNumber && (

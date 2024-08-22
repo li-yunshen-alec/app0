@@ -4,14 +4,13 @@ import { PieChart } from "react-native-gifted-charts";
 const Pie = () => {
   const pieData = [
   {
-    value: 47,
+    value: 19,
     color: '#009FFF',
     gradientCenterColor: '#006DFF',
-    focused: true,
   },
-  {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-  {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-  {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
+  {value: 25, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
+  {value: 25, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
+  {value: 31, color: '#FFA5BA', gradientCenterColor: '#FF7F97', focused: true},
 ];
 
 const renderDot = color => {
@@ -36,6 +35,7 @@ const renderLegendComponent = () => {
           flexDirection: 'row',
           justifyContent: 'center',
           marginBottom: 10,
+          gap: 2
         }}>
         <View
           style={{
@@ -45,15 +45,15 @@ const renderLegendComponent = () => {
             marginRight: 20,
           }}>
           {renderDot('#006DFF')}
-          <Text style={{color: 'white'}}>Excellent: 47%</Text>
+          <Text style={{color: 'white'}}>10-min walk after dinner: 3</Text>
         </View>
         <View
           style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
           {renderDot('#8F80F3')}
-          <Text style={{color: 'white'}}>Okay: 16%</Text>
+          <Text style={{color: 'white'}}>Replace soda with water: 4</Text>
         </View>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'center', gap: 2}}>
         <View
           style={{
             flexDirection: 'row',
@@ -62,12 +62,12 @@ const renderLegendComponent = () => {
             marginRight: 20,
           }}>
           {renderDot('#3BE9DE')}
-          <Text style={{color: 'white'}}>Good: 40%</Text>
+          <Text style={{color: 'white'}}>Replace chips with fruits: 4</Text>
         </View>
         <View
           style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
           {renderDot('#FF7F97')}
-          <Text style={{color: 'white'}}>Poor: 3%</Text>
+          <Text style={{color: 'white'}}>No more fast food: 5</Text>
         </View>
       </View>
     </>
@@ -78,11 +78,11 @@ return (
     <View
       style={{
         padding: 16,
-        borderRadius: 20,
-        backgroundColor: '#232B5D',
+        borderRadius: 8,
+        backgroundColor: '#292524',
         width: '100%'
       }}>
-      <Text style={{color: 'white', fontSize: 16, fontWeight: 'bold'}}>
+      <Text style={{color: 'white'}} className='font-psemibold'>
         Performance
       </Text>
       <View style={{padding: 20, alignItems: 'center'}}>
@@ -93,15 +93,15 @@ return (
           sectionAutoFocus
           radius={90}
           innerRadius={60}
-          innerCircleColor={'#232B5D'}
+          innerCircleColor={'#57534e'}
           centerLabelComponent={() => {
             return (
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text
                   style={{fontSize: 22, color: 'white', fontWeight: 'bold'}}>
-                  47%
+                  31%
                 </Text>
-                <Text style={{fontSize: 14, color: 'white'}}>Excellent</Text>
+                <Text style={{fontSize: 14, color: 'white', maxWidth: 75 }}>No more fast food</Text>
               </View>
             );
           }}

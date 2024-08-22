@@ -49,19 +49,18 @@ const Learn = () => {
     <SafeAreaView className='bg-primary h-full flex flex-col space-between'>
       <FlatList 
         ListHeaderComponent={() => (
-          <View className='my-6 px-4 space-y-6'>
+          <View className='mt-6 px-4 space-y-6'>
             <View className='justify-between items-start flex-row mb-6'>
               <View>
-                <Text className='font-pmedium text-sm text-gray-100'>Welcome Back</Text>
-                <Text className='text-2xl font-psemibold text-white'>name</Text>
+                <Text className='font-pmedium text-sm text-gray-100'>Monday</Text>
+                <Text className='text-2xl font-psemibold text-white'>Aug 12</Text>
               </View>
 
               <View className='mt-1.5'>
-                <Image
-                  source={images.logoSmall} 
-                  className='w-9 h-10'
-                  resizeMode='contain'
-                />
+                <View className='flex flex-row items-center justify-center bg-stone-800 px-2 rounded-full'>
+                  <Icon name="attach-money" color="#fbbf24" size={26} />
+                  <Text className='font-pregular text-white text-2xl mt-1 mr-1'>{userData && userData.coins}</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -71,7 +70,7 @@ const Learn = () => {
         renderItem={({ item }) => {
           const isLocked = !userData.unlockedLessonIds.includes(item.id);
           return (
-            <View className='w-full flex-row justify-center mb-10 px-5'>
+            <View className='w-full flex-row justify-center mb-8 px-5'>
               <DuolingoButton 
                 item={item} 
                 isLocked={isLocked} 

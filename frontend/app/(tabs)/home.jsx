@@ -132,7 +132,7 @@ const Home = () => {
             <View className='mt-1.5'>
               <View className='flex flex-row items-center justify-center bg-stone-800 px-2 rounded-full'>
                 <Icon name="attach-money" color="#fbbf24" size={26} />
-                <Text className='font-pregular text-white text-2xl mt-1 mr-1'>126</Text>
+                <Text className='font-pregular text-white text-2xl mt-1 mr-1'>{userData && userData.coins}</Text>
               </View>
             </View>
           </View>
