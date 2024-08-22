@@ -20,7 +20,7 @@ const DuolingoButton = ({ item, isLocked, onPress }) => {
           name="lock" 
           size={20} 
           color="white" 
-          style={{ position: 'absolute', right: 20, top: 20 }} 
+          style={{ position: 'absolute', right: 20, bottom: 15 }} 
         />
       )}
     </TouchableOpacity>

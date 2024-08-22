@@ -1,5 +1,5 @@
-import { View, Text, Image, FlatList, TouchableOpacity, Modal } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, Image, FlatList, TouchableOpacity, Modal, SectionList } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { images } from '../../constants';
@@ -7,13 +7,31 @@ import { lessonData } from '../../data';
 import DuolingoButton from '../../components/DuolingoButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { router } from 'expo-router';
+import { sectionedData } from '../../data/sectionedData';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Learn = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [progressData, setProgressData] = useState({});
 
   const userData = useSelector(state => state.userData);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchProgressData = async () => {
+      try {
+        const storedProgress = await AsyncStorage.getItem('@progress_store');
+        if (storedProgress) {
+          setProgressData(JSON.parse(storedProgress));
+        }
+      } catch (error) {
+        console.error('Failed to fetch progress data:', error);
+      }
+    };
+
+    fetchProgressData();
+  }, []);
 
   const handleItemPress = (item) => {
     const isLocked = !userData.unlockedLessonIds.includes(item.id);
@@ -47,7 +65,7 @@ const Learn = () => {
 
   return (
     <SafeAreaView className='bg-primary h-full flex flex-col space-between'>
-      <FlatList 
+      <SectionList 
         ListHeaderComponent={() => (
           <View className='mt-6 px-4 space-y-6'>
             <View className='justify-between items-start flex-row mb-6'>
@@ -65,20 +83,43 @@ const Learn = () => {
             </View>
           </View>
         )}        
-        data={lessonData}
-        keyExtractor={(item, index) => index.toString()}
+        sections={sectionedData}
+        keyExtractor={(item, index) => `${item.title}_${index.toString()}`}
         renderItem={({ item }) => {
           const isLocked = !userData.unlockedLessonIds.includes(item.id);
+          const progress = progressData[item.id] || 0; 
+
           return (
-            <View className='w-full flex-row justify-center mb-8 px-5'>
+            <View className='relative w-full flex-row justify-center mb-8 px-5'>
               <DuolingoButton 
                 item={item} 
                 isLocked={isLocked} 
                 onPress={() => handleItemPress(item)}
               />
+              <View className='absolute right-2 top-4 bg-stone-800 p-2 rounded-full'>
+                { !isLocked ? (
+                  <Text className='text-white text-sm'>
+                    {progress.toFixed(0)}%
+                  </Text>
+                ) : (
+                  <View className='flex flex-row justify-center items-center'>
+                    <Icon name="attach-money" color="#fbbf24" size={20} />
+                    <Text className='text-white text-sm'>
+                      100
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
           );
         }}
+        renderSectionHeader={({section}) => (
+          <View className="m-4 mx-6">
+            <Text className='text-white text-lg font-psemibold mb-2'>
+              {section.title}
+            </Text>
+          </View>
+        )}  
       />
 
       <Modal

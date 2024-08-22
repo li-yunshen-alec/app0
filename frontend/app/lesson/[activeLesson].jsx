@@ -64,8 +64,20 @@ const Chat = () => {
           lessonSlide,
           options,
         };
+        
         await AsyncStorage.setItem(`@conversation_data_${activeLesson}`, JSON.stringify(dataToSave));
-      } catch (error) {
+        
+        const totalSlides = lessonData[activeLesson].content.length;
+        const progress = (lessonSlide / totalSlides) * 100;
+        
+        const storedProgress = await AsyncStorage.getItem('@progress_store');
+        const progressStore = storedProgress ? JSON.parse(storedProgress) : {};
+  
+        progressStore[activeLesson] = progress;
+  
+        await AsyncStorage.setItem('@progress_store', JSON.stringify(progressStore));  
+      } 
+      catch (error) {
         console.error('Failed to save conversation:', error);
       }
     };
