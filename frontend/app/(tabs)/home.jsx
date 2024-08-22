@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, RefreshControl, Alert, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl, Alert, TouchableOpacity, ScrollView, Button } from 'react-native'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
@@ -19,8 +19,15 @@ import ContributionGraph from '../../components/CalendarHeatmap'
 import CalendarHeatmap from '../../components/CalendarHeatmap'
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useNavigation } from 'expo-router'
+import Modal from "react-native-modal"
 
 const Home = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -158,7 +165,7 @@ const Home = () => {
                   <View className='justify-between items-center flex-row mb-2'>
                     <Text className='ml-1 text-xl font-plight text-white'>My Promises</Text>
 
-                    <TouchableOpacity onPress={() => {}} className='flex flex-row items-center justify-center bg-stone-800 p-1 rounded-full'>
+                    <TouchableOpacity onPress={toggleModal} className='flex flex-row items-center justify-center bg-stone-800 p-1 rounded-full'>
                       <View className='p-1 bg-amber-900 rounded-full'>
                         <Icon name="question-mark" color="white" size={20} />
                       </View>
@@ -218,6 +225,28 @@ const Home = () => {
               </View>
             </TouchableOpacity>
           </ScrollView>
+
+          <Modal isVisible={isModalVisible} onBackdropPress={toggleModal}>
+            <View className="m-4 mx-6">
+              <View className='w-full bg-stone-800 rounded-md p-4'>
+                <Text className='text-white text-lg font-psemibold mb-2'>
+                  Promises
+                </Text>
+
+                <Text className='text-white text-base'>
+                  The promises you make here are non-negotiable. Check off a promise once per day.
+                </Text>
+
+                <TouchableOpacity
+                  onPress={toggleModal}
+                  activeOpacity={0.7}
+                  className={`bg-secondary rounded-xl h-12 justify-center items-center`}
+                >
+                  <Text className={`text-primary font-psemibold text-lg`}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
 
           <BottomSheet
             ref={bottomSheetRef}

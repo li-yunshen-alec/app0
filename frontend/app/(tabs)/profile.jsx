@@ -52,7 +52,7 @@ const Profile = () => {
                 Recorded days
               </Text>
               <Text className='text-white text-base'>
-                3
+                1
               </Text>
             </View>
 
@@ -61,7 +61,7 @@ const Profile = () => {
                 Longest streak
               </Text>
               <Text className='text-white text-base'>
-                3
+                1
               </Text>
             </View>
           </View>
