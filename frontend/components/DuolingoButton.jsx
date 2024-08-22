@@ -12,7 +12,7 @@ const DuolingoButton = ({ item, isLocked, onPress }) => {
       <View className='justify-center flex-1 ml-3 gap-y-1'>
         <Text className='text-sm text-white font-psemibold'>{item.title && item.title}</Text>
         <Text className='text-white text-xs font-pregular' numberOfLines={1}>
-          {item.id !== undefined && `Day ${item.id}`}
+          {item.id !== undefined && `Lesson ${item.id}`}
         </Text>
       </View>
       {isLocked && (
@@ -20,7 +20,7 @@ const DuolingoButton = ({ item, isLocked, onPress }) => {
           name="lock" 
           size={20} 
           color="white" 
-          style={{ position: 'absolute', right: 20, bottom: 15 }} 
+          style={{ display: 'none', position: 'absolute', right: 20, bottom: 15 }} 
         />
       )}
     </TouchableOpacity>

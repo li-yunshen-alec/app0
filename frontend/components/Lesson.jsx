@@ -46,7 +46,7 @@ const Lesson = ({ activeLesson, setSlideshowMode }) => {
           { item.image && (
             <View className='w-full h-1/3 mb-10'>
               <Image 
-                source={{uri: item.image}}
+                source={isExternalLink(item.image) ? {uri: item.image} : item.image}
                 className='w-full h-full'
                 resizeMode='contain'
               />

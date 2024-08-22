@@ -96,7 +96,7 @@ const Learn = () => {
                 isLocked={isLocked} 
                 onPress={() => handleItemPress(item)}
               />
-              <View className='absolute right-2 top-4 bg-stone-800 p-2 rounded-full'>
+              <View className='absolute right-2 top-3 bg-stone-800 p-2 rounded-full'>
                 { !isLocked ? (
                   <Text className='text-white text-sm'>
                     {progress.toFixed(0)}%
