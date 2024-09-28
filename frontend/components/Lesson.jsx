@@ -54,7 +54,7 @@ const Lesson = ({ activeLesson, setSlideshowMode }) => {
           )}
     
           <View className='my-4 px-6'>
-            <Text className='font-pmedium text-lg text-white'>{item.content}</Text>
+            <Text className='font-regular text-base text-white'>{item.content}</Text>
           </View>
         </>
       )}      

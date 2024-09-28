@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector, useDispatch } from 'react-redux';
 import { images } from '../../constants';
-import { lessonData } from '../../data';
+import { sectionedData } from '../../data';
 import DuolingoButton from '../../components/DuolingoButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { router } from 'expo-router';
-import { sectionedData } from '../../data/sectionedData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Learn = () => {

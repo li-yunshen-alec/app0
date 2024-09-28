@@ -1,7 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 import { icons, images } from '../../constants';
 import { lessonData } from '../../data';
 import DuolingoButton from '../../components/DuolingoButton';
@@ -11,6 +11,8 @@ import MultipleChoice from '../../components/MultipleChoice';
 import Lesson from '../../components/Lesson';
 import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Markdown from 'react-native-markdown-display';
+import Writing from '../../components/Writing';
 
 const genAI = new GoogleGenerativeAI("AIzaSyAEAh4mufNHAh_FiMwD_4nE8xng8Elll6w");
 let model;
@@ -35,6 +37,9 @@ const Chat = () => {
   const [options, setOptions] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
   useEffect(() => {
     const loadConversation = async () => {
       try {
@@ -52,7 +57,7 @@ const Chat = () => {
       }
     };
   
-    loadConversation();
+    // loadConversation();
   }, [activeLesson]);
     
   useEffect(() => {
@@ -82,7 +87,7 @@ const Chat = () => {
       }
     };
   
-    saveConversation();
+    // saveConversation();
   }, [result, cleanResult, lessonSlide, options, activeLesson]);
   
   const resetConversation = async () => {
@@ -129,7 +134,7 @@ const Chat = () => {
         },
       });  
   
-      getOptions(cleanHistory);
+      // getOptions(cleanHistory);
     } catch (error) {
       console.error('Failed to reset conversation:', error);
     }
@@ -137,12 +142,12 @@ const Chat = () => {
     
   async function run(prompt) {
     try {
-      console.log('chat history before msg', chat._history);
       const result = await chat.sendMessage(prompt);
       const response = await result.response;
       const text = response.text();
+
+      console.log('this is the text', text);
       
-      console.log('chat history after msg', chat._history);
       return chat._history;
     } catch (error) {
       console.log(error);
@@ -150,25 +155,6 @@ const Chat = () => {
     }
   }
   
-  async function getOptions(history) {
-    try {
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-1.5-flash",
-        systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less. Your current task is, given a conversation history, provide a list of the 3 best questions the patient could ask about your most recent response where your potential answers to these questions would help them best understand your most recent response.",
-        generationConfig: { responseMimeType: "application/json" }
-      });
-  
-      const prompt = `Based on this chat history, provide a list of the 3 best questions the patient could ask about your most recent response where your potential answers to these questions would help them best understand your most recent response. Use this JSON schema: { "options": [] }. This is the chat history: ${JSON.stringify(history)}`;
-  
-      console.log(prompt);
-      const result = await model.generateContent(prompt);
-      setOptions(JSON.parse(result.response.text()).options);
-  } catch (error) {
-      console.log('Error getting options:', error);
-      return error;
-    }
-  }  
-
   // Create a ref for the chat
   const chatRef = useRef(null);
 
@@ -206,36 +192,86 @@ const Chat = () => {
           role: 'user',
           parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
         },
-        formatData(firstSlide)
+        {
+          role: 'model',
+          parts: [{ text: JSON.stringify(
+            {
+              response: firstSlide.content,
+              options: firstSlide.options,
+              image: firstSlide?.image,
+              slideNumber: lessonSlide + 1
+            }
+          ) }]
+        },
       ];
+
+      console.log('firstSlide?.image', firstSlide?.image)
       
       setResult(history);
 
-      const cleanHistory = [
-        {
-          role: 'user',
-          parts: [{ text: 'You are a fat-loss expert. You are currently trying to guide me through a lesson on how to lose weight. Start the lesson immediately.' }]
-        },
-        {
-          role: 'model',
-          parts: [{ text: firstSlide.content }]
-        },
-      ];
+      setOptions(firstSlide.options);
 
-      setCleanResult(cleanHistory);
+      console.log('fdafdsafdsa')
+      console.log('schematype', SchemaType)
+
+      const schema = {
+        description: "Response that contains not only the actual content of the response, but also a list of the 2-3 best questions the user could ask about the content of the response",
+        type: "OBJECT",
+        properties: {
+          response: {
+            type: "STRING",
+            description: "Content of the response",
+            nullable: false,
+          },
+          questions: {
+            type: "ARRAY",          
+            description: "List of the 2-3 best questions the user could ask about the content of your response",
+            items: {
+              type: "STRING",
+              description: "The question in as few words as possible",
+              nullable: false,
+            },
+          },
+          type: {
+            type: "STRING",
+            description: "Type of response",
+            nullable: true,
+            format: "enum",
+            enum: ["MULTIPLE_CHOICE", "WRITING"],
+          },
+          image: {
+            type: "STRING",
+            description: "Optional image",
+            nullable: true,
+          },
+          slideNumber: {
+            type: "INTEGER",
+            description: "Optional indicator of the current slide number",
+            nullable: true,
+          }
+        },
+        required: ["response", "questions"],
+      };
+
+      console.log('schema', schema);
       
       model = genAI.getGenerativeModel({ 
         model: "gemini-1.5-flash",
-        systemInstruction: "You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less."
+        systemInstruction: 
+`You are a fat-loss expert. You communicate through brief text conversations where you provide the best advice in short but sweet messages that are 50 tokens or less.
+
+Your responses contain not only the actual content of your response, but also a list of the 2-3 best questions the patient could ask about the content of your response.`,
+        generationConfig: {
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
       });
       chat = model.startChat({
-        history: cleanHistory,
+        history: history,
         generationConfig: {
           maxOutputTokens: 100,
         },
       });  
-
-      getOptions(cleanHistory);
 
       navigation.setOptions({ tabBarStyle: { display: 'none' } }); // Hide the tab bar
 
@@ -262,9 +298,9 @@ const Chat = () => {
   }
   
   const handleNext = () => {
-    if (lessonSlide !== lessonData[activeLesson].content.length - 1) {
+    if (lessonSlide < lessonData[activeLesson].content.length) {
       let history;
-      let cleanHistory;
+      const currentSlide = lessonData[activeLesson].content[lessonSlide];
 
       switch (lessonData[activeLesson].content[lessonSlide].type) {
         case 'MULTIPLE_CHOICE':
@@ -283,19 +319,21 @@ const Chat = () => {
 
           setResult(history);
 
-          cleanHistory = [
-            ...cleanResult,
+          break;
+        case 'WRITING':
+          history = [
+            ...result,
             {
               role: 'user',
               parts: [{ text: 'Continue.' }]
             },
             {
               role: 'model',
-              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }]
+              parts: [{ text: JSON.stringify(currentSlide) }]
             }
           ];
 
-          setCleanResult(cleanHistory);
+          setResult(history);
 
           break;          
         default:
@@ -307,29 +345,20 @@ const Chat = () => {
             },
             {
               role: 'model',
-              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }],
-            }
-          ];
-
-          delayedUpdate(history.slice(0, -1), lessonData[activeLesson].content[lessonSlide].content, lessonData[activeLesson].content[lessonSlide]?.image, lessonSlide + 1);
-          
-          cleanHistory = [
-            ...cleanResult,
-            {
-              role: 'user',
-              parts: [{ text: 'Continue.' }]
+              parts: [{ text: JSON.stringify(
+                {
+                  response: currentSlide.content,
+                  options: currentSlide.options,
+                }
+              ) }]
             },
-            {
-              role: 'model',
-              parts: [{ text: lessonData[activeLesson].content[lessonSlide].content }],
-            }
           ];
 
-          setCleanResult(cleanHistory);
+          delayedUpdate(history, currentSlide.content, currentSlide?.image, currentSlide.options, lessonSlide + 1);
       }
 
       chat = model.startChat({
-        history: cleanHistory,
+        history: history,
         generationConfig: {
           maxOutputTokens: 100,
         },
@@ -339,96 +368,149 @@ const Chat = () => {
     }
   }
   
-  const delayedUpdate = (history, text, image, slideNumber) => {
+  const delayedUpdate = (history, text, image, options, slideNumber) => {
     setOptions([]);
     setIsTyping(true);
 
-    let result = [...history, {
-      role: 'model',
-      parts: [{ text: "" }],
-    }];
+    let result = history;
   
     const paragraphs = text.split('\n\n');
     let currentParagraphIndex = 0;
+
+    const newResult = [...result];
+    const lastItem = newResult[newResult.length - 1];
+    lastItem.parts[0].text = JSON.stringify({ response: "", options: [] });
+    result = newResult;
+    setResult(newResult);
   
     const updateParagraph = () => {
       const newResult = [...result];
       const lastItem = newResult[newResult.length - 1];
 
       if (currentParagraphIndex < paragraphs.length) {
-  
-        if (lastItem.parts[0].text) {
-          lastItem.parts[0].text += '\n\n' + paragraphs[currentParagraphIndex];
-        } else {
-          lastItem.parts[0].text = paragraphs[currentParagraphIndex];
-        }
+        let lastItemText = JSON.parse(lastItem.parts[0].text);
+        lastItemText.response += (lastItemText.response ? '\n\n' : '') + paragraphs[currentParagraphIndex];
+        lastItem.parts[0].text = JSON.stringify(lastItemText);
         
         result = newResult; // Update the local result variable
         setResult(newResult);
 
         currentParagraphIndex++;
-        setTimeout(updateParagraph, 2000); // Update every 2000 ms
+        setTimeout(updateParagraph, 1000); // Update every 2000 ms
       } 
       else {
+        let lastItemText = JSON.parse(lastItem.parts[0].text);
         if (image) {
-          lastItem.image = image;
+          lastItemText.image = image;
         }
         if (slideNumber) {
-          lastItem.slideNumber = slideNumber
+          lastItemText.slideNumber = slideNumber;
         }
+        if (options) {
+          lastItemText.options = options;
+        }
+        lastItem.parts[0].text = JSON.stringify(lastItemText);
+        
         setResult(newResult);
         setIsTyping(false);
-        getOptions(newResult);
+        setOptions(options);
       }
     };
   
     updateParagraph();
   };
-    
+  
   const submitPrompt = async () => {
     const prompt = value;
     setValue('');
 
     const res = await run(prompt);
     const latestResponse = res[res.length - 1];
-    delayedUpdate([...result, { role: 'user', parts: [{ text: value }] }], latestResponse.parts[0].text);
+    const responseObj = JSON.parse(latestResponse.parts[0].text);
+    delayedUpdate(res, responseObj.response, responseObj.image, responseObj.options, responseObj.slideNumber);
   }
 
-  const submitOption = async (prompt) => {
-    const res = await run(prompt);
-    const latestResponse = res[res.length - 1];
-    delayedUpdate([...result, { role: 'user', parts: [{ text: prompt }] }], latestResponse.parts[0].text);
+  const submitOption = async (option) => {
+    console.log('submitOption', option);
+
+    if (option.response) {
+      history = [
+        ...result,
+        {
+          role: 'user',
+          parts: [{ text: option.question }]
+        },
+        {
+          role: 'model',
+          parts: [{ text: JSON.stringify(
+            {
+              response: option.response,
+            }
+          ) }]
+        },
+      ];
+
+      delayedUpdate(history, option.response, option?.image, option.options);
+
+    } else {
+      const res = await run(option.question);
+      const latestResponse = res[res.length - 1];
+      console.log('latestResponse', latestResponse)
+      const responseObj = JSON.parse(latestResponse.parts[0].text);
+      console.log('responseObj', responseObj);
+      delayedUpdate(res, responseObj.response, responseObj.image, responseObj.options, responseObj.slideNumber);
+    }
   }
 
   const renderItem = ({ item, index }) => {
-    switch (item.type) {
-      case 'MULTIPLE_CHOICE':
-        return <MultipleChoice item={item} index={index} />
-      default:
-        return (
-          <View key={index} className="m-4 mx-6">
-            <Text className='text-white font-psemibold'>
-              {`${item.role === 'user' ? 'You' : 'George' }`}
+    const isAI = item.role === 'model';
+    if (isAI) {
+      const responseObj = JSON.parse(item.parts[0].text);
+
+      console.log('responseObj', responseObj);
+
+      switch (responseObj.type) {
+        case 'MULTIPLE_CHOICE':
+          return <MultipleChoice item={responseObj} index={index} />
+        case 'WRITING':
+          return <Writing item={responseObj} index={index} />
+        default:
+          return (
+            <View key={index} className="m-4 mx-6">
+              <Text className='text-white font-psemibold'>
+                George
+              </Text>
+              <Markdown style={{ body: { color: 'white', fontSize: 16, lineHeight: 26 } }}>
+                {responseObj.response}
+              </Markdown>  
+              { responseObj.image && (
+                <Image 
+                  source={isExternalLink(responseObj.image) ? {uri: responseObj.image} : images[responseObj.image]}
+                  className='h-60 w-full my-4'
+                  resizeMode='contain'
+                />
+              )}
+              { responseObj.slideNumber && (
+                <Text className='text-white text-base mt-2'>
+                  {`${responseObj.slideNumber} of ${lessonData[activeLesson].content.length}`}
+                </Text>
+              )}
+            </View>
+          )
+      }
+    } else {
+      return (
+        <View key={index} className="m-4 mx-6">
+          <Text className='text-white font-psemibold'>
+            You
+          </Text>
+          {item.parts.map((item, index) => (
+            <Text key={index} className='text-white text-base'>
+              {item.text}
             </Text>
-            {item.parts.map((item, index) => (
-              <Text key={index} className='text-white text-base'>
-                {item.text}
-              </Text>
-            ))}
-            { item.image && (
-              <Image 
-                source={isExternalLink(item.image) ? {uri: item.image} : item.image}
-                className='h-60 w-full my-4'
-                resizeMode='contain'
-              />
-            )}
-            { item.slideNumber && (
-              <Text className='text-white text-base'>
-                {`${item.slideNumber} of ${lessonData[activeLesson].content.length}`}
-              </Text>
-            )}
-          </View>
-        )
+          ))}
+        </View>
+      )
     }
   };
 
@@ -469,23 +551,21 @@ const Chat = () => {
               Typing...
             </Text>
           )}
-          <View className='h-30'>
-            <ScrollView horizontal>
-              <View className='flex flex-row gap-2 p-2'>
-                <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+          <View className=''>
+            <View className='flex flex-row justify-end flex-wrap gap-2 p-2'>
+              { options && options.map((option, index) => (
+                <TouchableOpacity key={index} onPress={() => submitOption(option)} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
                   <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
-                    Next
+                    {option.question}
                   </Text>
                 </TouchableOpacity>
-                { options && options.map((option, index) => (
-                  <TouchableOpacity key={index} onPress={() => submitOption(option)} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
-                    <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
-                      {option}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
+              ))}
+              <TouchableOpacity onPress={handleNext} className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white py-2 px-4 border border-secondary-200 hover:border-transparent rounded">
+                <Text className="bg-transparent hover:bg-secondary-border-secondary-200 text-secondary font-semibold hover:text-white">
+                  Next
+                </Text>
+              </TouchableOpacity>
+            </View>
             <View className='w-full p-2'>
               <View className='border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-2xl focus:border-secondary items-center flex-row space-x-4'>
                 <TextInput

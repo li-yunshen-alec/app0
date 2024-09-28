@@ -18,8 +18,9 @@ import ProgressGraph from '../../components/ProgressGraph'
 import ContributionGraph from '../../components/CalendarHeatmap'
 import CalendarHeatmap from '../../components/CalendarHeatmap'
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
-import { useNavigation } from 'expo-router'
+import { router, useNavigation } from 'expo-router'
 import Modal from "react-native-modal"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Home = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -46,7 +47,7 @@ const Home = () => {
   const [selectedItem, setSelectedItem] = useState(false);
 
   const dispatch = useDispatch();
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
 
   const handleIncrement = (item) => {
     const habits = userData?.habits;
@@ -122,9 +123,31 @@ const Home = () => {
 
     setSelectedItem(null);
   }
+
+
+  const [prompts, setPrompts] = useState([]);
+
+  useEffect(() => {
+    const fetchPrompts = async () => {
+      try {
+        const storedPrompts = await AsyncStorage.getItem('prompts');
+        if (storedPrompts) {
+          setPrompts(JSON.parse(storedPrompts));
+        }
+      } catch (error) {
+        console.error('Failed to fetch prompts:', error);
+      }
+    };
+
+    fetchPrompts();
+  }, []);
+
+  const handlePromptPress = (index) => {
+    router.push(`/edit/${index}`);
+  };
   
   return (
-    <SafeAreaView className='bg-primary'>
+    <SafeAreaView className='bg-primary h-full'>
       { habitFormOpen ? (
         <HabitForm setHabitFormOpen={setHabitFormOpen} userData={userData} isEditing={isEditing} selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
       ) : generalOpen ? (
@@ -148,72 +171,40 @@ const Home = () => {
               </View>
             </View>
 
-            <View className="m-4 mx-6">
-              <Text className='text-white font-psemibold'>
-                George
-              </Text>
-              <Text className='text-white text-base'>
-                Hey! You've kept all your promises for 3 days now. Good work!
-              </Text>
+            <View className="m-4">
+              <View className='justify-between items-center flex-row mb-2'>
+                <Text className='ml-1 text-xl font-plight text-white'>My Entries</Text>
+
+                <TouchableOpacity onPress={toggleModal} className='flex flex-row items-center justify-center bg-stone-800 p-1 rounded-full'>
+                  <View className='p-1 bg-amber-900 rounded-full'>
+                    <Icon name="question-mark" color="white" size={20} />
+                  </View>
+                </TouchableOpacity>
+
+              </View>
+
+              {prompts.length > 0 ? (
+                prompts.map((item, index) => (
+                  <TouchableOpacity key={index} onPress={() => handlePromptPress(index)} className='w-full bg-stone-800 rounded-lg p-4 my-2'>
+                    <Text className='text-white font-psemibold'>
+                      {item.title}
+                    </Text>
+                    <Text className='text-white'>{item.content}</Text>
+                  </TouchableOpacity>
+                ))
+              ) : (
+                <Text className='text-white'>No prompts available</Text>
+              )}
+
+              <View className='justify-end items-center flex-row mb-2'>
+                <TouchableOpacity onPress={() => setHabitFormOpen(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
+                  <Icon name="add-circle-outline" color="white" size={20} />
+                  <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Promise</Text>
+                </TouchableOpacity>
+              </View>
             </View>
 
-            <CalendarHeatmap />
-
-            { userData && (
-              <>
-                <View className=' m-4'>
-                  <View className='justify-between items-center flex-row mb-2'>
-                    <Text className='ml-1 text-xl font-plight text-white'>My Promises</Text>
-
-                    <TouchableOpacity onPress={toggleModal} className='flex flex-row items-center justify-center bg-stone-800 p-1 rounded-full'>
-                      <View className='p-1 bg-amber-900 rounded-full'>
-                        <Icon name="question-mark" color="white" size={20} />
-                      </View>
-                    </TouchableOpacity>
-
-                  </View>
-                  
-                  {userData && userData.habits && userData.habits.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => handleIncrement(item)} className="my-2 bg-amber-900 rounded-xl flex flex-row items-center justify-between space-x-4 p-2">
-                      <View className='flex flex-row items-center space-x-4'>
-                        <View className='w-14 h-14 bg-amber-950 rounded-xl flex flex-col justify-end items-center'>
-                          <Icon name="local-fire-department" color="#fbbf24" size={20} />
-                          <Text className='font-pregular text-white text-lg'>{item.count}</Text>
-                        </View>
-                        <Text className="text-white font-medium text-base">{item.name}</Text>
-                      </View>
-                      <TouchableOpacity
-                        className='w-14 h-14 flex justify-center items-center'
-                        onPress={(e) => {
-                          e.stopPropagation();
-                          
-                          setPromiseOptionsOpen(true);
-                      
-                          navigation.setOptions({ tabBarStyle: { display: 'none' } });
-                      
-                          handleSheetOpen();
-                      
-                          console.log('setting item', item);
-                      
-                          setSelectedItem(item);
-                        }}
-                      >
-                        <Icon name='more-vert' color="white" size={30} />
-                      </TouchableOpacity>
-                    </TouchableOpacity>
-                  ))}
-
-                  <View className='justify-end items-center flex-row mb-2'>
-
-                    <TouchableOpacity onPress={() => setHabitFormOpen(true)} className='flex flex-row items-center justify-center bg-stone-800 px-2 py-1 rounded-full'>
-                      <Icon name="add-circle-outline" color="white" size={20} />
-                      <Text className='font-pregular text-white text-base mt-0.5 mx-1'>Promise</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </>
-            )}
-            <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-md border border-white p-4">
+            <TouchableOpacity onPress={() => setGeneralOpen(true)} className="m-4 flex flex-row items-center space-x-4 rounded-lg border bg-amber-900 p-4">
               <Icon name="add-circle-outline" color="white" size={26} />
               <View className="flex-1 space-y-1">
                 <Text className="text-sm font-medium leading-none text-white">

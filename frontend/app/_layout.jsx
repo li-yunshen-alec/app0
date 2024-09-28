@@ -49,6 +49,7 @@ const RootLayout = () => {
           <Stack.Screen name='(auth)' options={{ headerShown: false }}/>
           <Stack.Screen name='(tabs)' options={{ headerShown: false }}/>
           <Stack.Screen name='lesson/[activeLesson]' options={{ headerShown: false }}/>
+          <Stack.Screen name='edit/[id]' options={{ headerShown: false }}/>
         </Stack>
       </Provider>
     </GestureHandlerRootView>
